@@ -1,0 +1,39 @@
+{
+  "name": "stringify-object",
+  "version": "0.1.0",
+  "description": "Stringify an object using a custom indentation",
+  "keywords": [
+    "object",
+    "stringify",
+    "pretty",
+    "print",
+    "dump",
+    "format"
+  ],
+  "homepage": "https://github.com/yeoman/stringify-object",
+  "bugs": "https://github.com/yeoman/stringify-object/issues",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "main": "lib/stringify-object.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yeoman/stringify-object.git"
+  },
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha test/test-*.js"
+  },
+  "devDependencies": {
+    "mocha": "~1.7.4"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "BSD"
+    }
+  ]
+}
