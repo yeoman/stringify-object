@@ -16,8 +16,10 @@ describe('stringifyObject()', function () {
 				}
 			]
 		};
-		console.log(stringifyObject({foo: 'bar'}));
-		var actual = stringifyObject(obj);
+		var actual = stringifyObject(obj, {
+			indent: '  ',
+			singleQuotes: false
+		});
 		var expected = fs.readFileSync('test/fixture.js', 'utf8');
 		assert.equal(actual + '\n', expected);
 	});

@@ -9,11 +9,14 @@ Install and add to package.json using NPM: `npm install --save stringify-object`
 
 ```js
 var stringifyObject = require('stringify-object');
-var pretty = stringifyObject({foo: 'bar'}, '  ');
+var pretty = stringifyObject({foo: 'bar'}, {
+    indent: '    ',
+    singleQuotes: false
+});
 console.log(pretty);
 /*
 {
-  foo: 'bar'
+    foo: "bar"
 }
 */
 ```
@@ -28,11 +31,14 @@ Available on [Bower](https://github.com/twitter/bower): `bower install stringify
 ```
 
 ```js
-var pretty = stringifyObject({foo: 'bar'}, '  ');
+var pretty = stringifyObject({foo: 'bar'}, {
+    indent: '  ',
+    singleQuotes: false
+});
 console.log(pretty);
 /*
 {
-  foo: 'bar'
+    foo: "bar"
 }
 */
 ```
@@ -41,9 +47,25 @@ console.log(pretty);
 
 ## Documentation
 
-### stringifyObject(obj, [indentation])
+### stringifyObject(object, [options])
 
-Accepts a plain object and stringifies it with a custom indentation (default tab).
+Accepts a plain object to stringify and optionally and option object.
+
+#### Options
+
+##### indent
+
+Type: `String`  
+Default: `'\t'`
+
+Choose the indentation you prefer.
+
+##### singleQuotes
+
+Type: `Boolean`  
+Default: `true`
+
+Set to false to get double-quoted strings.
 
 
 ## License
