@@ -7,12 +7,12 @@ var stringifyObject = require('../lib/stringify-object');
 describe('stringifyObject()', function () {
 	it('should stringify an object', function () {
 		var obj = {
-			foo: 'bar',
+			foo: "bar 'bar'",
 			foo2: [
-				'foo',
-				'bar',
+				"foo",
+				"bar",
 				{
-					foo: 'bar'
+					foo: "bar 'bar'"
 				}
 			]
 		};
