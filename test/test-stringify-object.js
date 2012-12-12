@@ -14,12 +14,16 @@ describe('stringifyObject()', function () {
 				{
 					foo: "bar 'bar'"
 				}
-			]
+			],
+			"foo-foo": "bar",
+			"2foo": "bar",
+			"@#": "bar"
 		};
 		var actual = stringifyObject(obj, {
 			indent: '  ',
 			singleQuotes: false
 		});
+		console.log(actual)
 		var expected = fs.readFileSync('test/fixture.js', 'utf8');
 		assert.equal(actual + '\n', expected);
 	});
