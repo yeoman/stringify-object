@@ -9,5 +9,7 @@
   ],
   "foo-foo": "bar",
   "2foo": "bar",
-  "@#": "bar"
+  "@#": "bar",
+  $el: "bar",
+  _private: "bar"
 }
