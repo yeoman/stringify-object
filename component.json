@@ -1,5 +1,5 @@
 {
 	"name": "stringify-object",
 	"version": "0.1.2",
-	"main": "lib/stringify-object.js"
+	"main": "stringify-object.js"
 }

@@ -2,9 +2,11 @@
 'use strict';
 var assert = require('assert');
 var fs = require('fs');
-var stringifyObject = require('../lib/stringify-object');
+var stringifyObject = require('../stringify-object');
+
 
 describe('stringifyObject()', function () {
+	/*jshint quotmark:false */
 	it('should stringify an object', function () {
 		var obj = {
 			foo: "bar 'bar'",
@@ -21,11 +23,12 @@ describe('stringifyObject()', function () {
 			$el: "bar",
 			_private: "bar"
 		};
+
 		var actual = stringifyObject(obj, {
 			indent: '  ',
 			singleQuotes: false
 		});
-		console.log(actual)
+
 		var expected = fs.readFileSync('test/fixture.js', 'utf8');
 		assert.equal(actual + '\n', expected);
 	});

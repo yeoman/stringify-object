@@ -17,7 +17,7 @@
     "email": "sindresorhus@gmail.com",
     "url": "http://sindresorhus.com"
   },
-  "main": "lib/stringify-object.js",
+  "main": "stringify-object.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/yeoman/stringify-object.git"
