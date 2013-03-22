@@ -27,7 +27,7 @@ Available on [Bower](https://github.com/twitter/bower): `bower install stringify
  or manually download it.
 
 ```html
-<script src="object-stringify.js"></script>
+<script src="stringify-object.js"></script>
 ```
 
 ```js
