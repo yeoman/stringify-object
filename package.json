@@ -23,10 +23,13 @@
     "url": "git://github.com/yeoman/stringify-object.git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha && phantomjs node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/test.html"
   },
   "devDependencies": {
-    "mocha": "~1.8.2"
+    "mocha": "~1.8.2",
+    "chai": "~1.5.0",
+    "phantomjs": "~1.8.2-2",
+    "mocha-phantomjs": "~2.0.1"
   },
   "engines": {
     "node": ">=0.8.0"
