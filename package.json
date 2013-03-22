@@ -1,7 +1,7 @@
 {
   "name": "stringify-object",
   "version": "0.1.2",
-  "description": "Stringify an object using a custom indentation",
+  "description": "Stringify an object using custom indentation",
   "keywords": [
     "object",
     "stringify",
@@ -23,10 +23,10 @@
     "url": "git://github.com/yeoman/stringify-object.git"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha test/test-*.js"
+    "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "~1.7.4"
+    "mocha": "~1.8.2"
   },
   "engines": {
     "node": ">=0.8.0"

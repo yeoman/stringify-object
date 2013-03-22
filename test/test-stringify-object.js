@@ -29,7 +29,7 @@ describe('stringifyObject()', function () {
 			singleQuotes: false
 		});
 
-		var expected = fs.readFileSync('test/fixture.js', 'utf8');
+		var expected = fs.readFileSync('test/fixture/fixture.js', 'utf8');
 		assert.equal(actual + '\n', expected);
 	});
 });

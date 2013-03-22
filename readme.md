@@ -1,6 +1,6 @@
 # stringify-object [![Build Status](https://secure.travis-ci.org/yeoman/stringify-object.png?branch=master)](http://travis-ci.org/yeoman/stringify-object)
 
-Stringify an object using a custom indentation
+Stringify an object using custom indentation
 
 
 ## Node.js
