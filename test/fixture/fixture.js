@@ -11,5 +11,6 @@
   "2foo": "bar",
   "@#": "bar",
   $el: "bar",
-  _private: "bar"
+  _private: "bar",
+  circular: null
 }

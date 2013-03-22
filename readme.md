@@ -49,7 +49,7 @@ console.log(pretty);
 
 ### stringifyObject(object, [options])
 
-Accepts a plain object to stringify and optionally and option object.
+Accepts an object to stringify and optionally a option object. Circular references will be replaced with `null`.
 
 #### Options
 

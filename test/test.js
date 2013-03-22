@@ -42,6 +42,8 @@ describe('stringifyObject()', function () {
 			_private: "bar"
 		};
 
+		obj.circular = obj;
+
 		var actual = stringifyObject(obj, {
 			indent: '  ',
 			singleQuotes: false
