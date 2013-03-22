@@ -5,7 +5,7 @@ Stringify an object using custom indentation
 
 ## Node.js
 
-Install and add to package.json using NPM: `npm install --save stringify-object`
+Install and add to package.json using npm: `npm install --save stringify-object`
 
 ```js
 var stringifyObject = require('stringify-object');
