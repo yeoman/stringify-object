@@ -12,5 +12,6 @@
   "@#": "bar",
   $el: "bar",
   _private: "bar",
+  number: 1,
   circular: null
 }

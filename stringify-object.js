@@ -34,6 +34,10 @@
 			opts.quote = opts.singleQuotes === false ? '"' : '\'';
 			pad = pad || '';
 
+			if (typeof val === 'number') {
+				return val;
+			}
+
 			if (Array.isArray(val)) {
 				if (isEmpty(val)) {
 					return '[]';
