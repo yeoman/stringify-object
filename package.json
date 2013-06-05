@@ -38,5 +38,8 @@
     {
       "type": "BSD"
     }
+  ],
+  "files": [
+    "stringify-object.js"
   ]
 }
