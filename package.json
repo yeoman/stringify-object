@@ -27,9 +27,9 @@
   },
   "devDependencies": {
     "mocha": "~1.9.0",
-    "chai": "~1.6.1",
-    "phantomjs": "~1.9.0-6",
-    "mocha-phantomjs": "~2.0.1"
+    "chai": "~1.6.0",
+    "phantomjs": "~1.9.0",
+    "mocha-phantomjs": "2.0.1"
   },
   "engines": {
     "node": ">=0.8.0"
