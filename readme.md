@@ -98,4 +98,3 @@ Set to false to get double-quoted strings.
 ## License
 
 [BSD license](http://opensource.org/licenses/bsd-license.php) and copyright Google
- or
