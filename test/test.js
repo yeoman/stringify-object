@@ -40,7 +40,8 @@ describe('stringifyObject()', function () {
 			"@#": "bar",
 			$el: "bar",
 			_private: "bar",
-			number: 1
+			number: 1,
+			boolean: true
 		};
 
 		obj.circular = obj;

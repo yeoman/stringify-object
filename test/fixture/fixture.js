@@ -13,5 +13,6 @@
   $el: "bar",
   _private: "bar",
   number: 1,
+  boolean: true,
   circular: null
 }

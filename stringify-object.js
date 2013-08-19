@@ -34,7 +34,7 @@
 			opts.quote = opts.singleQuotes === false ? '"' : '\'';
 			pad = pad || '';
 
-			if (typeof val === 'number') {
+			if (typeof val === 'number' || typeof val === 'boolean') {
 				return val;
 			}
 
