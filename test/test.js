@@ -42,14 +42,15 @@ describe('stringifyObject()', function () {
 			$el: "bar",
 			_private: "bar",
 			number: 1,
-			boolean: true
+			boolean: true,
+			escapedString: "\"\""
 		};
 
 		obj.circular = obj;
 
 		var actual = stringifyObject(obj, {
 			indent: '  ',
-			singleQuotes: true
+			singleQuotes: false
 		});
 
 		if (isBrowser) {
@@ -61,5 +62,9 @@ describe('stringifyObject()', function () {
 		}
 
 		assert.equal(actual + '\n', expected);
+		assert.equal(
+			stringifyObject({foo: '\'foo\''}, {singleQuotes: true}),
+			"{\n\tfoo: '\\'foo\\''\n}"
+		);
 	});
 });
