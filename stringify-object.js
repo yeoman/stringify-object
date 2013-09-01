@@ -74,7 +74,7 @@
 
 			return opts.quote + val.replace(
 				opts.singleQuotes ? /'/g : /"/g,
-				opts.singleQuotes ? '\\\"' : '\\\''
+				opts.singleQuotes ? '\\\'' : '\\\"'
 			) + opts.quote;
 		})(val, opts, pad);
 	}

@@ -35,6 +35,7 @@ describe('stringifyObject()', function () {
 					foo: "bar 'bar'"
 				}
 			],
+			foo3: "bar\"",
 			"foo-foo": "bar",
 			"2foo": "bar",
 			"@#": "bar",
@@ -48,7 +49,7 @@ describe('stringifyObject()', function () {
 
 		var actual = stringifyObject(obj, {
 			indent: '  ',
-			singleQuotes: false
+			singleQuotes: true
 		});
 
 		if (isBrowser) {

@@ -7,6 +7,7 @@
       foo: "bar 'bar'"
     }
   ],
+  foo3: "bar\"",
   "foo-foo": "bar",
   "2foo": "bar",
   "@#": "bar",
