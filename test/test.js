@@ -62,8 +62,8 @@ describe('stringifyObject()', function () {
 
 		assert.equal(actual + '\n', expected);
 		assert.equal(
-			stringifyObject({foo: '\'foo\''}, {singleQuotes: true}),
-			"{\n\tfoo: '\\'foo\\''\n}"
+			stringifyObject({foo: "a ' b \' c \\' d"}, {singleQuotes: true}),
+			"{\n\tfoo: 'a \\' b \\' c \\\\' d'\n}"
 		);
 	});
 });

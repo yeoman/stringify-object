@@ -72,10 +72,9 @@
 			}
 
 			if (opts.singleQuotes === false) {
-				// http://stackoverflow.com/a/8875837
-				return '"' + val.replace(/([^"\\]*(?:\\.[^"\\]*)*)"/g, '$1\\"') + '"';
+				return '"' + val.replace(/"/g, '\\\"') + '"';
 			} else {
-				return '\'' + val.replace(/([^'\\]*(?:\\.[^'\\]*)*)'/g, "$1\\'") + '\'';
+				return "'" + val.replace(/'/g, "\\\'") + "'";
 			}
 		})(val, opts, pad);
 	}
