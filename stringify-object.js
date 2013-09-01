@@ -31,7 +31,6 @@
 			var objKeys;
 			opts = opts || {};
 			opts.indent = opts.indent || '\t';
-			opts.quote = opts.singleQuotes === false ? '"' : '\'';
 			pad = pad || '';
 
 			if (typeof val === 'number' || typeof val === 'boolean') {
@@ -72,10 +71,12 @@
 				}).join('') + pad + '}';
 			}
 
-			return opts.quote + val.replace(
-				opts.singleQuotes ? /'/g : /"/g,
-				opts.singleQuotes ? '\\\"' : '\\\''
-			) + opts.quote;
+			if (opts.singleQuotes === false) {
+				// http://stackoverflow.com/a/8875837
+				return '"' + val.replace(/([^"\\]*(?:\\.[^"\\]*)*)"/g, '$1\\"') + '"';
+			} else {
+				return '\'' + val.replace(/([^'\\]*(?:\\.[^'\\]*)*)'/g, "$1\\'") + '\'';
+			}
 		})(val, opts, pad);
 	}
 

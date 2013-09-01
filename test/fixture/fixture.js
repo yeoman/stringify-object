@@ -14,5 +14,6 @@
   _private: "bar",
   number: 1,
   boolean: true,
+  escapedString: "\"\"",
   circular: null
 }

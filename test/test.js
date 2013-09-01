@@ -41,7 +41,8 @@ describe('stringifyObject()', function () {
 			$el: "bar",
 			_private: "bar",
 			number: 1,
-			boolean: true
+			boolean: true,
+			escapedString: "\"\""
 		};
 
 		obj.circular = obj;
@@ -60,5 +61,9 @@ describe('stringifyObject()', function () {
 		}
 
 		assert.equal(actual + '\n', expected);
+		assert.equal(
+			stringifyObject({foo: '\'foo\''}, {singleQuotes: true}),
+			"{\n\tfoo: '\\'foo\\''\n}"
+		);
 	});
 });
