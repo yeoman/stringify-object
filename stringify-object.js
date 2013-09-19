@@ -28,53 +28,55 @@
 		var cache = [];
 
 		return (function stringify(val, opts, pad) {
-			var objKeys;
-			opts = opts || {};
-			opts.indent = opts.indent || '\t';
-			pad = pad || '';
-
-			if (typeof val === 'number' || typeof val === 'boolean') {
-				return val;
-			}
-
-			if (Array.isArray(val)) {
-				if (isEmpty(val)) {
-					return '[]';
+			if (typeof val !== 'undefined' && val) { // dodge "val is null" error
+				var objKeys;
+				opts = opts || {};
+				opts.indent = opts.indent || '\t';
+				pad = pad || '';
+	
+				if (typeof val === 'number' || typeof val === 'boolean') {
+					return val;
 				}
-
-				return '[\n' + val.map(function (el, i) {
-					var eol = val.length - 1 === i ? '\n' : ',\n';
-					return pad + opts.indent + stringify(el, opts, pad + opts.indent) + eol;
-				}).join('') + pad + ']';
-			}
-
-			if (isObject(val)) {
-				if (cache.indexOf(val) !== -1) {
-					return null;
+	
+				if (Array.isArray(val)) {
+					if (isEmpty(val)) {
+						return '[]';
+					}
+	
+					return '[\n' + val.map(function (el, i) {
+						var eol = val.length - 1 === i ? '\n' : ',\n';
+						return pad + opts.indent + stringify(el, opts, pad + opts.indent) + eol;
+					}).join('') + pad + ']';
 				}
-
-				if (isEmpty(val)) {
-					return '{}';
+	
+				if (isObject(val)) {
+					if (cache.indexOf(val) !== -1) {
+						return null;
+					}
+	
+					if (isEmpty(val)) {
+						return '{}';
+					}
+	
+					cache.push(val);
+	
+					objKeys = Object.keys(val);
+	
+					return '{\n' + objKeys.map(function (el, i) {
+						var eol = objKeys.length - 1 === i ? '\n' : ',\n';
+						// quote key if the first character is not `a-z` or
+						// the rest contains something other than `a-z0-9_`
+						// TODO: Find out why this don't work: `/^[^a-z_\$]|\W+/ig`
+						var key = /^[^a-z_]|\W+/ig.test(el) && el[0] !== '$' ? stringify(el, opts) : el;
+						return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
+					}).join('') + pad + '}';
 				}
-
-				cache.push(val);
-
-				objKeys = Object.keys(val);
-
-				return '{\n' + objKeys.map(function (el, i) {
-					var eol = objKeys.length - 1 === i ? '\n' : ',\n';
-					// quote key if the first character is not `a-z` or
-					// the rest contains something other than `a-z0-9_`
-					// TODO: Find out why this don't work: `/^[^a-z_\$]|\W+/ig`
-					var key = /^[^a-z_]|\W+/ig.test(el) && el[0] !== '$' ? stringify(el, opts) : el;
-					return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
-				}).join('') + pad + '}';
-			}
-
-			if (opts.singleQuotes === false) {
-				return '"' + val.replace(/"/g, '\\\"') + '"';
-			} else {
-				return "'" + val.replace(/'/g, "\\\'") + "'";
+	
+				if (opts.singleQuotes === false) {
+					return '"' + val.replace(/"/g, '\\\"') + '"';
+				} else {
+					return "'" + val.replace(/'/g, "\\\'") + "'";
+				}
 			}
 		})(val, opts, pad);
 	}
