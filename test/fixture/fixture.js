@@ -15,5 +15,7 @@
   number: 1,
   boolean: true,
   escapedString: "\"\"",
+  null: null,
+  undefined: undefined,
   circular: null
 }

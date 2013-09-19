@@ -33,7 +33,10 @@
 			opts.indent = opts.indent || '\t';
 			pad = pad || '';
 
-			if (typeof val === 'number' || typeof val === 'boolean') {
+			if (typeof val === 'number' ||
+				typeof val === 'boolean' ||
+				val === null ||
+				val === undefined) {
 				return val;
 			}
 

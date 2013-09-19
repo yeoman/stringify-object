@@ -42,7 +42,9 @@ describe('stringifyObject()', function () {
 			_private: "bar",
 			number: 1,
 			boolean: true,
-			escapedString: "\"\""
+			escapedString: "\"\"",
+			null: null,
+			undefined: undefined
 		};
 
 		obj.circular = obj;
