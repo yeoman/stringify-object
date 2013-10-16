@@ -1,5 +1,13 @@
 {
 	"name": "stringify-object",
 	"version": "0.1.4",
-	"main": "stringify-object.js"
+	"main": "stringify-object.js",
+	"keywords": [
+		"object",
+	    "stringify",
+	    "pretty",
+	    "print",
+	    "dump",
+	    "format"
+	]
 }
