@@ -10,8 +10,6 @@
     "dump",
     "format"
   ],
-  "homepage": "https://github.com/yeoman/stringify-object",
-  "bugs": "https://github.com/yeoman/stringify-object/issues",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
@@ -26,13 +24,13 @@
     "test": "mocha && phantomjs node_modules/mocha-phantomjs/lib/mocha-phantomjs.coffee test/test.html"
   },
   "devDependencies": {
-    "mocha": "~1.9.0",
-    "chai": "~1.6.0",
+    "mocha": "*",
+    "chai": "*",
     "phantomjs": "~1.9.0",
     "mocha-phantomjs": "2.0.1"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "licenses": [
     {
