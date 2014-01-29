@@ -1,13 +1,26 @@
 {
-	"name": "stringify-object",
-	"version": "0.1.4",
-	"main": "stringify-object.js",
-	"keywords": [
-		"object",
-	    "stringify",
-	    "pretty",
-	    "print",
-	    "dump",
-	    "format"
-	]
+  "name": "stringify-object",
+  "version": "0.1.8",
+  "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
+  "license": "BSD",
+  "main": "stringify-object.js",
+  "authors": [{
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  }],
+  "keywords": [
+    "object",
+    "stringify",
+    "pretty",
+    "print",
+    "dump",
+    "format"
+  ],
+  "ignore": [
+    ".*",
+    "test.js",
+    "component.json",
+    "package.json"
+  ]
 }
