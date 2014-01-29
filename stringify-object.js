@@ -40,6 +40,10 @@
 				return val;
 			}
 
+			if (val instanceof Date) {
+				return "new Date('" + val.toISOString() + "')";
+			}
+
 			if (Array.isArray(val)) {
 				if (isEmpty(val)) {
 					return '[]';

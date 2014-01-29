@@ -42,6 +42,7 @@ describe('stringifyObject()', function () {
 			_private: "bar",
 			number: 1,
 			boolean: true,
+			date: new Date("2014-01-29T22:41:05.665Z"),
 			escapedString: "\"\"",
 			null: null,
 			undefined: undefined
