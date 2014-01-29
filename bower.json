@@ -1,6 +1,6 @@
 {
   "name": "stringify-object",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
   "license": "BSD",
   "main": "stringify-object.js",
