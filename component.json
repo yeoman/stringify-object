@@ -1,9 +1,9 @@
 {
   "name": "stringify-object",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
   "license": "MIT",
-  "repo": "sindresorhus/stringify-object",
+  "repository": "sindresorhus/stringify-object",
   "main": "stringify-object.js",
   "scripts": ["stringify-object.js"],
   "keywords": [

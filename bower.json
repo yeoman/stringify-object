@@ -1,14 +1,15 @@
 {
   "name": "stringify-object",
-  "version": "0.2.0",
   "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
   "license": "BSD",
   "main": "stringify-object.js",
-  "authors": [{
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
-  }],
+  "authors": [
+    {
+      "name": "Sindre Sorhus",
+      "email": "sindresorhus@gmail.com",
+      "url": "http://sindresorhus.com"
+    }
+  ],
   "keywords": [
     "object",
     "stringify",

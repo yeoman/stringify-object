@@ -9,42 +9,20 @@ It also handles circular references and let's you specify quote type.
 
 ## Install
 
-Download [manually](https://github.com/yeoman/stringify-object/releases) or with a package-manager.
-
-#### [npm](https://npmjs.org/package/stringify-object)
-
-```
-npm install --save stringify-object
+```sh
+$ npm install --save stringify-object
 ```
 
-#### [Bower](http://bower.io)
-
-```
-bower install --save stringify-object
+```sh
+$ bower install --save stringify-object
 ```
 
-#### [Component](https://github.com/component/component)
-
-```
-component install yeoman/stringify-object
+```sh
+$ component install yeoman/stringify-object
 ```
 
 
-## Example
-
-### Node.js
-
-```js
-var stringifyObject = require('stringify-object');
-```
-
-### Browser
-
-```html
-<script src="stringify-object.js"></script>
-```
-
-### Usage
+## Usage
 
 ```js
 var obj = {
@@ -81,14 +59,14 @@ Accepts an object to stringify and optionally an option object. Circular referen
 
 ##### indent
 
-Type: `String`  
+Type: `string`  
 Default: `'\t'`
 
 Choose the indentation you prefer.
 
 ##### singleQuotes
 
-Type: `Boolean`  
+Type: `boolean`  
 Default: `true`
 
 Set to false to get double-quoted strings.
