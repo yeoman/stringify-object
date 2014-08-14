@@ -13,14 +13,6 @@ It also handles circular references and let's you specify quote type.
 $ npm install --save stringify-object
 ```
 
-```sh
-$ bower install --save stringify-object
-```
-
-```sh
-$ component install yeoman/stringify-object
-```
-
 
 ## Usage
 

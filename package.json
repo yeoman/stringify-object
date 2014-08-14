@@ -4,7 +4,6 @@
   "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
   "license": "BSD",
   "repository": "yeoman/stringify-object",
-  "main": "stringify-object.js",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
@@ -17,7 +16,7 @@
     "test": "mocha"
   },
   "files": [
-    "stringify-object.js"
+    "index.js"
   ],
   "keywords": [
     "object",
