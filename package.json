@@ -1,6 +1,6 @@
 {
   "name": "stringify-object",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
   "license": "BSD",
   "repository": "yeoman/stringify-object",
