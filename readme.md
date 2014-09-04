@@ -4,7 +4,7 @@
 
 Useful for when you want to get the string representation of an object in a formatted way.
 
-It also handles circular references and let's you specify quote type.
+It also handles circular references and lets you specify quote type.
 
 
 ## Install
