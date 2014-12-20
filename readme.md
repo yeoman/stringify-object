@@ -32,7 +32,11 @@ console.log(pretty);
 /*
 {
   foo: "bar",
-  arr: [1, 2, 3],
+  arr: [
+    1,
+    2,
+    3
+  ],
   nested: {
     hello: "world"
   }
