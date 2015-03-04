@@ -63,15 +63,11 @@ module.exports = function (val, opts, pad) {
 			}
 
 			cache.push(val);
-
 			objKeys = Object.keys(val);
 
 			return '{\n' + objKeys.map(function (el, i) {
 				var eol = objKeys.length - 1 === i ? '\n' : ',\n';
-				// quote key if the first character is not `a-z` or
-				// the rest contains something other than `a-z0-9_`
-				// TODO: Find out why this don't work: `/^[^a-z_\$]|\W+/ig`
-				var key = /^[^a-z_]|\W+/ig.test(el) && el[0] !== '$' ? stringify(el, opts) : el;
+				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
 				return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + pad + '}';
 		}
