@@ -23,7 +23,7 @@ function isEmpty(val) {
 }
 
 module.exports = function (val, opts, pad) {
-	var cache = [];
+	var seen = [];
 
 	return (function stringify(val, opts, pad) {
 		var objKeys;
@@ -54,7 +54,7 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (isObject(val)) {
-			if (cache.indexOf(val) !== -1) {
+			if (seen.indexOf(val) !== -1) {
 				return '"[Circular]"';
 			}
 
@@ -62,14 +62,17 @@ module.exports = function (val, opts, pad) {
 				return '{}';
 			}
 
-			cache.push(val);
+			seen.push(val);
 			objKeys = Object.keys(val);
 
-			return '{\n' + objKeys.map(function (el, i) {
+			var ret = '{\n' + objKeys.map(function (el, i) {
 				var eol = objKeys.length - 1 === i ? '\n' : ',\n';
 				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
 				return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + pad + '}';
+
+			seen.pop(val);
+			return ret;
 		}
 
 		if (opts.singleQuotes === false) {

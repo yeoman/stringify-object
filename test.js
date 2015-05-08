@@ -40,3 +40,9 @@ it('should stringify an object', function () {
 		"{\n\tfoo: 'a \\' b \\' c \\\\' d'\n}"
 	);
 });
+
+it('should not detect reused object values as circular reference', function () {
+	var val = {val: 10};
+	var obj = {foo: val, bar: val};
+	assert.equal(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
+});
