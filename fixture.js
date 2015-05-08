@@ -18,5 +18,5 @@
   escapedString: "\"\"",
   null: null,
   undefined: undefined,
-  circular: null
+  circular: "[Circular]"
 }

@@ -55,7 +55,7 @@ module.exports = function (val, opts, pad) {
 
 		if (isObject(val)) {
 			if (cache.indexOf(val) !== -1) {
-				return null;
+				return '"[Circular]"';
 			}
 
 			if (isEmpty(val)) {
