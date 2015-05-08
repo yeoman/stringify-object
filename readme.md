@@ -9,7 +9,7 @@ It also handles circular references and lets you specify quote type.
 
 ## Install
 
-```sh
+```
 $ npm install --save stringify-object
 ```
 
@@ -47,9 +47,14 @@ console.log(pretty);
 
 ## API
 
-### stringifyObject(object, [options])
+### stringifyObject(input, [options])
 
-Accepts an object to stringify and optionally an option object. Circular references will be replaced with `null`.
+Circular references will be replaced with `"[Circular]"`.
+
+#### input
+
+*Required*  
+Type: `object`, `array`
 
 #### options
 
