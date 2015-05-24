@@ -66,6 +66,19 @@ module.exports = function (val, opts, pad) {
 			objKeys = Object.keys(val);
 
 			var ret = '{\n' + objKeys.map(function (el, i) {
+				
+				if ( opts.excludeNames !== undefined &&
+					 opts.excludeNames.indexOf(el) !== -1 ){
+
+					return '';
+				}
+
+				if ( opts.excludeTypes !== undefined &&
+					 opts.excludeTypes.indexOf(typeof val) !== -1 ){
+
+					return '';
+				}
+
 				var eol = objKeys.length - 1 === i ? '\n' : ',\n';
 				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
 				return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
