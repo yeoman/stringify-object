@@ -67,15 +67,7 @@ module.exports = function (val, opts, pad) {
 
 			var ret = '{\n' + objKeys.map(function (el, i) {
 				
-				if ( opts.excludeNames !== undefined &&
-					 opts.excludeNames.indexOf(el) !== -1 ){
-
-					return '';
-				}
-
-				if ( opts.excludeTypes !== undefined &&
-					 opts.excludeTypes.indexOf(typeof val) !== -1 ){
-
+				if (opts.filter !== undefined && !opts.filter.call(this,val,el)){
 					return '';
 				}
 
