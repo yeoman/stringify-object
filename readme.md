@@ -72,6 +72,17 @@ Default: `true`
 
 Set to false to get double-quoted strings.
 
+##### filter
+
+Type: `function`  
+
+Accepts a function that it expected to return a boolean of whether to keep the element.
+
+`function(val,el)`
+
+`val`: current object.
+`el`: property name.
+
 
 ## License
 
