@@ -51,5 +51,5 @@ it('considering filter option to stringify an object', function () {
 	var val = {val: 10};
 	var obj = {foo: val, bar: val};
 	assert.equal(
-		stringifyObject(obj,function(val,el){return el !== 'foo'}), '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
+		stringifyObject(obj,{'filter': function(val,el){return el !== 'foo'}}), '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
