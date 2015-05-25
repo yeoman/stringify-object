@@ -46,3 +46,10 @@ it('should not detect reused object values as circular reference', function () {
 	var obj = {foo: val, bar: val};
 	assert.equal(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
+
+it('considering filter option to stringify an object', function () {
+	var val = {val: 10};
+	var obj = {foo: val, bar: val};
+	assert.equal(
+		stringifyObject(obj,function(val,el){return el !== 'foo'}), '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
+});
