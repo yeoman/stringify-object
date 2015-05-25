@@ -81,6 +81,7 @@ Accepts a function that it expected to return a boolean of whether to keep the e
 `function(val,el)`
 
 `val`: current object.
+
 `el`: property name.
 
 
