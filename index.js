@@ -66,7 +66,7 @@ module.exports = function (val, opts, pad) {
 			objKeys = Object.keys(val);
 
 			var ret = '{\n' + objKeys.map(function (el, i) {
-				if (opts.filter !== undefined && !opts.filter.call(this,val,el)){
+				if (opts.filter && !opts.filter.call(this, val, el)) {
 					return '';
 				}
 

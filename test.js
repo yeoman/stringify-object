@@ -51,7 +51,9 @@ it('considering filter option to stringify an object', function () {
 	var val = {val: 10};
 	var obj = {foo: val, bar: val};
 	var actual = stringifyObject(obj, {
-		filter: function(val,el){return el !== 'foo'}
+		filter: function (val, el) {
+			return el !== 'foo';
+		}
 	});
 	assert.equal(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
