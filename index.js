@@ -1,32 +1,13 @@
 'use strict';
 
-function isObject(val) {
-	return val === Object(val);
-}
-
-function isEmpty(val) {
-	if (val === undefined || val === null) {
-		return true;
-	}
-
-	if (Array.isArray(val) || typeof val === 'string') {
-		return val.length === 0;
-	}
-
-	for (var key in val) {
-		if (Object.prototype.hasOwnProperty.call(val, key)) {
-			return false;
-		}
-	}
-
-	return true;
+function isObject(x) {
+	return typeof x === 'object' && x !== null;
 }
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
 
 	return (function stringify(val, opts, pad) {
-		var objKeys;
 		opts = opts || {};
 		opts.indent = opts.indent || '\t';
 		pad = pad || '';
@@ -39,11 +20,11 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (val instanceof Date) {
-			return "new Date('" + val.toISOString() + "')";
+			return 'new Date(\'' + val.toISOString() + '\')';
 		}
 
 		if (Array.isArray(val)) {
-			if (isEmpty(val)) {
+			if (val.length === 0) {
 				return '[]';
 			}
 
@@ -58,12 +39,13 @@ module.exports = function (val, opts, pad) {
 				return '"[Circular]"';
 			}
 
-			if (isEmpty(val)) {
+			var objKeys = Object.keys(val);
+
+			if (objKeys.length === 0) {
 				return '{}';
 			}
 
 			seen.push(val);
-			objKeys = Object.keys(val);
 
 			var ret = '{\n' + objKeys.map(function (el, i) {
 				if (opts.filter && !opts.filter(val, el)) {
@@ -76,13 +58,14 @@ module.exports = function (val, opts, pad) {
 			}).join('') + pad + '}';
 
 			seen.pop(val);
+
 			return ret;
 		}
 
 		if (opts.singleQuotes === false) {
 			return '"' + val.replace(/"/g, '\\\"') + '"';
-		} else {
-			return "'" + val.replace(/'/g, "\\\'") + "'";
 		}
+
+		return '\'' + val.replace(/'/g, '\\\'') + '\'';
 	})(val, opts, pad);
 };

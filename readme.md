@@ -18,28 +18,28 @@ $ npm install --save stringify-object
 
 ```js
 var obj = {
-    foo: 'bar',
-    'arr': [1, 2, 3],
-    nested: { hello: "world" }
+	foo: 'bar',
+	'arr': [1, 2, 3],
+	nested: { hello: "world" }
 };
 
 var pretty = stringifyObject(obj, {
-    indent: '  ',
-    singleQuotes: false
+	indent: '  ',
+	singleQuotes: false
 });
 
 console.log(pretty);
 /*
 {
-  foo: "bar",
-  arr: [
-    1,
-    2,
-    3
-  ],
-  nested: {
-    hello: "world"
-  }
+	foo: "bar",
+	arr: [
+		1,
+		2,
+		3
+	],
+	nested: {
+		hello: "world"
+	}
 }
 */
 ```
