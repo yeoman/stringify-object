@@ -63,9 +63,9 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (opts.singleQuotes === false) {
-			return '"' + val.replace(/"/g, '\\\"') + '"';
+			return '"' + String(val).replace(/"/g, '\\\"') + '"';
 		}
 
-		return '\'' + val.replace(/'/g, '\\\'') + '\'';
+		return '\'' + String(val).replace(/'/g, '\\\'') + '\'';
 	})(val, opts, pad);
 };
