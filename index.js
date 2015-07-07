@@ -1,4 +1,5 @@
 'use strict';
+var isRegexp = require('is-regexp');
 
 function isObject(x) {
 	return typeof x === 'object' && x !== null;
@@ -12,11 +13,13 @@ module.exports = function (val, opts, pad) {
 		opts.indent = opts.indent || '\t';
 		pad = pad || '';
 
-		if (typeof val === 'number' ||
+		if (val === null ||
+			val === undefined ||
+			typeof val === 'number' ||
 			typeof val === 'boolean' ||
-			val === null ||
-			val === undefined) {
-			return val;
+			typeof val === 'function' ||
+			isRegexp(val)) {
+			return String(val);
 		}
 
 		if (val instanceof Date) {

@@ -18,5 +18,7 @@
   escapedString: "\"\"",
   null: null,
   undefined: undefined,
+  function: function () {},
+  regexp: /./,
   circular: "[Circular]"
 }

@@ -24,7 +24,9 @@ it('should stringify an object', function () {
 		date: new Date("2014-01-29T22:41:05.665Z"),
 		escapedString: "\"\"",
 		null: null,
-		undefined: undefined
+		undefined: undefined,
+		function: function () {},
+		regexp: /./
 	};
 
 	obj.circular = obj;
