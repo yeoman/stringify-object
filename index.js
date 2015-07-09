@@ -1,9 +1,6 @@
 'use strict';
 var isRegexp = require('is-regexp');
-
-function isObject(x) {
-	return typeof x === 'object' && x !== null;
-}
+var isObject = require('isobject');
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
