@@ -29,7 +29,8 @@
     "json"
   ],
   "dependencies": {
-    "is-regexp": "^1.0.0"
+    "is-regexp": "^1.0.0",
+    "isobject": "^1.0.1"
   },
   "devDependencies": {
     "mocha": "*"
