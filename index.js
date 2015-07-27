@@ -1,6 +1,6 @@
 'use strict';
 var isRegexp = require('is-regexp');
-var isObject = require('isobject');
+var isPlainObj = require('is-plain-obj');
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
@@ -34,7 +34,7 @@ module.exports = function (val, opts, pad) {
 			}).join('') + pad + ']';
 		}
 
-		if (isObject(val)) {
+		if (isPlainObj(val)) {
 			if (seen.indexOf(val) !== -1) {
 				return '"[Circular]"';
 			}
