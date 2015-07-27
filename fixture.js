@@ -20,5 +20,7 @@
   undefined: undefined,
   function: function () {},
   regexp: /./,
+  NaN: NaN,
+  Infinity: Infinity,
   circular: "[Circular]"
 }

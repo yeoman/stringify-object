@@ -26,7 +26,9 @@ it('should stringify an object', function () {
 		null: null,
 		undefined: undefined,
 		function: function () {},
-		regexp: /./
+		regexp: /./,
+		NaN: NaN,
+		Infinity: Infinity
 	};
 
 	obj.circular = obj;
