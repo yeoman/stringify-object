@@ -62,10 +62,14 @@ module.exports = function (val, opts, pad) {
 			return ret;
 		}
 
+		val = String(val).replace(/[\r\n]/g, function (x) {
+			return x === '\n' ? '\\n' : '\\r';
+		});
+
 		if (opts.singleQuotes === false) {
-			return '"' + String(val).replace(/"/g, '\\\"') + '"';
+			return '"' + val.replace(/"/g, '\\\"') + '"';
 		}
 
-		return '\'' + String(val).replace(/'/g, '\\\'') + '\'';
+		return '\'' + val.replace(/'/g, '\\\'') + '\'';
 	})(val, opts, pad);
 };

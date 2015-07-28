@@ -22,5 +22,6 @@
   regexp: /./,
   NaN: NaN,
   Infinity: Infinity,
+  newlines: "foo\nbar\r\nbaz",
   circular: "[Circular]"
 }

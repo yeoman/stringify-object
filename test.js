@@ -28,7 +28,8 @@ it('should stringify an object', function () {
 		function: function () {},
 		regexp: /./,
 		NaN: NaN,
-		Infinity: Infinity
+		Infinity: Infinity,
+		newlines: "foo\nbar\r\nbaz"
 	};
 
 	obj.circular = obj;
