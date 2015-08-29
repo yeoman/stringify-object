@@ -52,6 +52,15 @@ it('should not detect reused object values as circular reference', function () {
 	assert.equal(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
+it('should stringify objects not created by the Object constructor:', function () {
+	function Foo() {
+		this.aaa = 'bbb';
+		this.ccc = 'ddd';
+		this.eee = 'fff';
+	}
+	assert.equal(stringifyObject(new Foo()), "{\n\taaa: 'bbb',\n\tccc: 'ddd',\n\teee: 'fff'\n}");
+});
+
 it('considering filter option to stringify an object', function () {
 	var val = {val: 10};
 	var obj = {foo: val, bar: val};
