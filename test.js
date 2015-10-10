@@ -63,7 +63,7 @@ it('considering filter option to stringify an object', function () {
 	assert.equal(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
-it('should handle circular recursion in arrays',function () {
+it('should handle circular recursion in arrays', function () {
 	var array = [];
 	array.push(array);
 	assert.doesNotThrow(function () {stringifyObject(array);}, RangeError);
