@@ -1,6 +1,7 @@
 'use strict';
 var isRegexp = require('is-regexp');
 var isPlainObj = require('is-plain-obj');
+var arrayEqual = require('array-equal');
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
@@ -24,8 +25,17 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (Array.isArray(val)) {
+
+			if (seen.indexOf(val) !== -1) {
+				return '"[Circular]"';
+			}
+
 			if (val.length === 0) {
 				return '[]';
+			}
+
+			if (arrayEqual(val, val)) {
+				seen.push(val);
 			}
 
 			return '[\n' + val.map(function (el, i) {

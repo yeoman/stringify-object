@@ -29,6 +29,7 @@
     "json"
   ],
   "dependencies": {
+    "array-equal": "^1.0.0",
     "is-plain-obj": "^1.0.0",
     "is-regexp": "^1.0.0"
   },
