@@ -34,9 +34,7 @@ module.exports = function (val, opts, pad) {
 				return '[]';
 			}
 
-			if (arrayEqual(val, val)) {
-				seen.push(val);
-			}
+			seen.push(val);
 
 			return '[\n' + val.map(function (el, i) {
 				var eol = val.length - 1 === i ? '\n' : ',\n';
