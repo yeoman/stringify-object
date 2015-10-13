@@ -24,7 +24,6 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (Array.isArray(val)) {
-
 			if (seen.indexOf(val) !== -1) {
 				return '"[Circular]"';
 			}
