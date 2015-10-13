@@ -1,7 +1,6 @@
 'use strict';
 var isRegexp = require('is-regexp');
 var isPlainObj = require('is-plain-obj');
-var arrayEqual = require('array-equal');
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
