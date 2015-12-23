@@ -3,6 +3,35 @@ const isRegexp = require('is-regexp');
 const isObj = require('is-obj');
 const getOwnEnumPropSymbols = require('get-own-enumerable-property-symbols').default;
 
+/**
+ * Stringify an object/array like JSON.stringify just without all the double-quotes.
+ * Convert the given value into a string representation.
+ * @module stringify-object
+ *
+ * @param {*} val - The value to stringify.
+ * @param {Object} [opts] - Options for the string representation.
+ * @param {string} [opts.indent='\t'] - What is used for indentation.
+ * @param {boolean} [opts.singleQuotes=true] - Whether to use double-quotes or single-quotes to wrap string values.
+ * @param {filterFunction} [opts.filter] - Filter out properties and values you don't wish to see in the output.
+ * @param {string} [pad=''] - How much padding to use before indentation.
+ *
+ * @example <caption>Use for any type of object.</caption>
+ * stringifyObject = require('stringify-object');
+ * var obj = {
+ *   foo: 'bar',
+ *   'arr': [1, 2, 3],
+ *   nested: { hello: "world" }
+ * };
+ * @example <caption>Use for arrays and lists.</caption>
+ * stringifyObject([1, 2, 3]);
+ */
+
+/**
+ * @callback filterFunction
+ * @param {*} obj - The given value that is being stringify-ied.
+ * @param {*} prop - The property to filter on.
+ */
+
 module.exports = (input, options, pad) => {
 	const seen = [];
 
