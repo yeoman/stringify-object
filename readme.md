@@ -81,4 +81,4 @@ Expected to return a boolean of whether to keep the object.
 
 ## License
 
-[BSD license](http://opensource.org/licenses/bsd-license.php) and copyright Google
+[BSD license](http://opensource.org/licenses/bsd-license.php) © Yeoman Team
