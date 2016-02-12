@@ -53,9 +53,9 @@ it('should not detect reused object values as circular reference', function () {
 });
 
 it('should not detect reused array values as false circular references', function () {
-    var val = [10];
+	var val = [10];
 	var obj = {foo: val, bar: val};
-    assert.equal(stringifyObject(obj), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
+	assert.equal(stringifyObject(obj), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
 });
 
 it('considering filter option to stringify an object', function () {
@@ -72,6 +72,8 @@ it('considering filter option to stringify an object', function () {
 it('should handle circular recursion in arrays', function () {
 	var array = [];
 	array.push(array);
-	assert.doesNotThrow(function () {stringifyObject(array);}, RangeError);
+	assert.doesNotThrow(
+		function () {
+			stringifyObject(array);
+		}, RangeError);
 });
-
