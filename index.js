@@ -24,13 +24,15 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (Array.isArray(val)) {
-			if (val.indexOf(val) !== -1) {
-				return '"[Circular]"';
-			}
-
 			if (val.length === 0) {
 				return '[]';
 			}
+
+			if (seen[0] === val) {
+				return '"[Circular]"';
+			}
+
+			seen.push(val);
 
 			return '[\n' + val.map(function (el, i) {
 				var eol = val.length - 1 === i ? '\n' : ',\n';
