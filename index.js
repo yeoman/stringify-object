@@ -28,6 +28,12 @@ module.exports = function (val, opts, pad) {
 				return '[]';
 			}
 
+			if (seen[0] === val) {
+				return '"[Circular]"';
+			}
+
+			seen.push(val);
+
 			return '[\n' + val.map(function (el, i) {
 				var eol = val.length - 1 === i ? '\n' : ',\n';
 				return pad + opts.indent + stringify(el, opts, pad + opts.indent) + eol;

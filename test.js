@@ -52,6 +52,12 @@ it('should not detect reused object values as circular reference', function () {
 	assert.equal(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
+it('should not detect reused array values as false circular references', function () {
+	var val = [10];
+	var obj = {foo: val, bar: val};
+	assert.equal(stringifyObject(obj), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
+});
+
 it('considering filter option to stringify an object', function () {
 	var val = {val: 10};
 	var obj = {foo: val, bar: val};
@@ -61,4 +67,29 @@ it('considering filter option to stringify an object', function () {
 		}
 	});
 	assert.equal(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
+});
+
+it('should not crash with circular recursion in arrays', function () {
+	var array = [];
+	array.push(array);
+	assert.doesNotThrow(
+		function () {
+			stringifyObject(array);
+		}, RangeError);
+
+	var nestedArray = [[]];
+	nestedArray[0][0] = nestedArray;
+	assert.doesNotThrow(
+		function () {
+			stringifyObject(nestedArray);
+		}, RangeError);
+});
+
+it('should stringify complex circular arrays', function () {
+	var array = [[[]]];
+	array[0].push(array);
+	array[0][0].push(array);
+	array[0][0].push(10);
+	array[0][0][0] = array;
+	assert.equal(stringifyObject(array), '[\n\t[\n\t\t[\n\t\t\t"[Circular]",\n\t\t\t10\n\t\t],\n\t\t"[Circular]"\n\t]\n]');
 });
