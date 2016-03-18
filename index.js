@@ -10,6 +10,10 @@ module.exports = function (val, opts, pad) {
 		opts.indent = opts.indent || '\t';
 		pad = pad || '';
 
+		if (seen.indexOf(val) !== -1) {
+			return '"[Circular]"';
+		}
+
 		if (val === null ||
 			val === undefined ||
 			typeof val === 'number' ||
@@ -28,17 +32,19 @@ module.exports = function (val, opts, pad) {
 				return '[]';
 			}
 
-			return '[\n' + val.map(function (el, i) {
+			seen.push(val);
+
+			var ret = '[\n' + val.map(function (el, i) {
 				var eol = val.length - 1 === i ? '\n' : ',\n';
 				return pad + opts.indent + stringify(el, opts, pad + opts.indent) + eol;
 			}).join('') + pad + ']';
+
+			seen.pop(val);
+
+			return ret;
 		}
 
 		if (isPlainObj(val)) {
-			if (seen.indexOf(val) !== -1) {
-				return '"[Circular]"';
-			}
-
 			var objKeys = Object.keys(val);
 
 			if (objKeys.length === 0) {
