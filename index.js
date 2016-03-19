@@ -68,7 +68,7 @@ module.exports = function (val, opts, pad) {
 
 			var ret = '[' + tokens.newLine + val.map(function (el, i) {
 				var eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				return tokens.indent + stringify(el, opts, tokens.indent) + eol;
+				return tokens.indent + stringify(el, opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + ']';
 
 			seen.pop(val);
@@ -92,7 +92,7 @@ module.exports = function (val, opts, pad) {
 
 				var eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
 				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
-				return tokens.indent + key + ': ' + stringify(val[el], opts, tokens.indent) + eol;
+				return tokens.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + '}';
 
 			seen.pop(val);

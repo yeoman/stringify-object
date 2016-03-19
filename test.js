@@ -120,3 +120,13 @@ it('allows short arrays to be one-lined', function () {
 	assert.equal(stringifyObject(array, { inlineCharacterLimit: 34}), "['foo', {id: 8, name: 'Jane'}, 42]")
 	assert.equal(stringifyObject(array, { inlineCharacterLimit: 33}), "[\n\t'foo',\n\t{id: 8, name: 'Jane'},\n\t42\n]")
 });
+
+it('does not mess up indents for complex objects', function(){
+	var object = {
+		arr: [1, 2, 3],
+		nested: { hello: "world" }
+	};
+
+	assert.equal(stringifyObject(object), "{\n\tarr: [\n\t\t1,\n\t\t2,\n\t\t3\n\t],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
+	assert.equal(stringifyObject(object, {inlineCharacterLimit: 12}), "{\n\tarr: [1, 2, 3],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
+});
