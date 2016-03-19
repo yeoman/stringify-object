@@ -1,14 +1,19 @@
 {
-  "name": "stringify-object",
-  "version": "2.3.1",
-  "description": "Stringify an object/array like JSON.stringify just without all the double-quotes",
+  "name": "stringify-object-with-one-liners",
+  "version": "1.0.0",
+  "description": "stringify-object + an option to inline short objects & arrays",
   "license": "BSD-2-Clause",
-  "repository": "yeoman/stringify-object",
+  "repository": "searls/stringify-object-with-one-liners",
   "author": {
+    "name": "Justin Searls",
+    "email": "searls@gmail.com",
+    "url": "testdouble.com"
+  },
+  "contributors": [{
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
-  },
+  }],
   "engines": {
     "node": ">=0.10.0"
   },

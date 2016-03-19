@@ -1,4 +1,4 @@
-# stringify-object [![Build Status](https://secure.travis-ci.org/yeoman/stringify-object.svg?branch=master)](http://travis-ci.org/yeoman/stringify-object)
+# stringify-object-with-one-liners [![Build Status](https://secure.travis-ci.org/searls/stringify-object-with-one-liners.svg?branch=master)](http://travis-ci.org/searls/stringify-object-with-one-liners)
 
 > Stringify an object/array like JSON.stringify just without all the double-quotes.
 
@@ -10,7 +10,7 @@ It also handles circular references and lets you specify quote type.
 ## Install
 
 ```
-$ npm install --save stringify-object
+$ npm install --save stringify-object-with-one-liners
 ```
 
 
@@ -118,4 +118,4 @@ than 12 characters.
 
 ## License
 
-[BSD license](http://opensource.org/licenses/bsd-license.php) © Yeoman Team
+[BSD license](http://opensource.org/licenses/bsd-license.php) © Test Double LLC, Yeoman Team
