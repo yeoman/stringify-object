@@ -9,6 +9,42 @@ module.exports = function (val, opts, pad) {
 		opts = opts || {};
 		opts.indent = opts.indent || '\t';
 		pad = pad || '';
+		var tokens;
+		if(opts.inlineCharacterLimit == void 0) {
+			tokens = {
+				newLine: '\n',
+				newLineOrSpace: '\n',
+				pad: pad,
+				indent: pad + opts.indent
+			};
+		} else {
+			tokens = {
+				newLine: '@@__STRINGIFY_OBJECT_NEW_LINE__@@',
+				newLineOrSpace: '@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@',
+				pad: '@@__STRINGIFY_OBJECT_PAD__@@',
+				indent: '@@__STRINGIFY_OBJECT_INDENT__@@'
+			}
+		}
+		var expandWhiteSpace = function(string) {
+			if (opts.inlineCharacterLimit == void 0) { return string; }
+			var oneLined = string.
+				replace(new RegExp(tokens.newLine, 'g'), '').
+				replace(new RegExp(tokens.newLineOrSpace, 'g'), ' ').
+				replace(new RegExp(tokens.pad + '|' + tokens.indent, 'g'), '');
+
+			if(oneLined.length <= opts.inlineCharacterLimit) {
+				return oneLined;
+			} else {
+				return string.
+					replace(new RegExp(tokens.newLine + '|' + tokens.newLineOrSpace, 'g'), '\n').
+					replace(new RegExp(tokens.pad, 'g'), pad).
+					replace(new RegExp(tokens.indent, 'g'), pad + opts.indent);
+			}
+		};
+
+		if (seen.indexOf(val) !== -1) {
+			return '"[Circular]"';
+		}
 
 		if (val === null ||
 			val === undefined ||
@@ -28,17 +64,19 @@ module.exports = function (val, opts, pad) {
 				return '[]';
 			}
 
-			return '[\n' + val.map(function (el, i) {
-				var eol = val.length - 1 === i ? '\n' : ',\n';
-				return pad + opts.indent + stringify(el, opts, pad + opts.indent) + eol;
-			}).join('') + pad + ']';
+			seen.push(val);
+
+			var ret = '[' + tokens.newLine + val.map(function (el, i) {
+				var eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
+				return tokens.indent + stringify(el, opts, pad + opts.indent) + eol;
+			}).join('') + tokens.pad + ']';
+
+			seen.pop(val);
+
+			return expandWhiteSpace(ret);
 		}
 
 		if (isPlainObj(val)) {
-			if (seen.indexOf(val) !== -1) {
-				return '"[Circular]"';
-			}
-
 			var objKeys = Object.keys(val);
 
 			if (objKeys.length === 0) {
@@ -47,19 +85,19 @@ module.exports = function (val, opts, pad) {
 
 			seen.push(val);
 
-			var ret = '{\n' + objKeys.map(function (el, i) {
+			var ret = '{' + tokens.newLine + objKeys.map(function (el, i) {
 				if (opts.filter && !opts.filter(val, el)) {
 					return '';
 				}
 
-				var eol = objKeys.length - 1 === i ? '\n' : ',\n';
+				var eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
 				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
-				return pad + opts.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
-			}).join('') + pad + '}';
+				return tokens.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
+			}).join('') + tokens.pad + '}';
 
 			seen.pop(val);
 
-			return ret;
+			return expandWhiteSpace(ret);
 		}
 
 		val = String(val).replace(/[\r\n]/g, function (x) {

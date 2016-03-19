@@ -69,23 +69,23 @@ it('considering filter option to stringify an object', function () {
 	assert.equal(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
-it.skip('should not crash with circular references in arrays', function () {
+it('should not crash with circular references in arrays', function () {
 	var array = [];
 	array.push(array);
 	assert.doesNotThrow(
 		function () {
 			stringifyObject(array);
-		}, RangeError);
+		});
 
 	var nestedArray = [[]];
 	nestedArray[0][0] = nestedArray;
 	assert.doesNotThrow(
 		function () {
 			stringifyObject(nestedArray);
-		}, RangeError);
+		});
 });
 
-it.skip('should handle circular references in arrays', function () {
+it('should handle circular references in arrays', function () {
 	var array2 = [];
 	var array = [array2];
 	array2[0] = array2;
@@ -93,14 +93,40 @@ it.skip('should handle circular references in arrays', function () {
 	assert.doesNotThrow(
 		function () {
 			stringifyObject(array);
-		}, RangeError);
+		});
 });
 
-it.skip('should stringify complex circular arrays', function () {
+it('should stringify complex circular arrays', function () {
 	var array = [[[]]];
 	array[0].push(array);
 	array[0][0].push(array);
 	array[0][0].push(10);
 	array[0][0][0] = array;
 	assert.equal(stringifyObject(array), '[\n\t[\n\t\t[\n\t\t\t"[Circular]",\n\t\t\t10\n\t\t],\n\t\t"[Circular]"\n\t]\n]');
+});
+
+it('allows short objects to be one-lined', function () {
+	var object = { id: 8, name: 'Jane' }
+
+	assert.equal(stringifyObject(object), "{\n\tid: 8,\n\tname: 'Jane'\n}")
+	assert.equal(stringifyObject(object, { inlineCharacterLimit: 21}), "{id: 8, name: 'Jane'}")
+	assert.equal(stringifyObject(object, { inlineCharacterLimit: 20}), "{\n\tid: 8,\n\tname: 'Jane'\n}")
+});
+
+it('allows short arrays to be one-lined', function () {
+	var array = ['foo', { id: 8, name: 'Jane' }, 42]
+
+	assert.equal(stringifyObject(array), "[\n\t'foo',\n\t{\n\t\tid: 8,\n\t\tname: 'Jane'\n\t},\n\t42\n]")
+	assert.equal(stringifyObject(array, { inlineCharacterLimit: 34}), "['foo', {id: 8, name: 'Jane'}, 42]")
+	assert.equal(stringifyObject(array, { inlineCharacterLimit: 33}), "[\n\t'foo',\n\t{id: 8, name: 'Jane'},\n\t42\n]")
+});
+
+it('does not mess up indents for complex objects', function(){
+	var object = {
+		arr: [1, 2, 3],
+		nested: { hello: "world" }
+	};
+
+	assert.equal(stringifyObject(object), "{\n\tarr: [\n\t\t1,\n\t\t2,\n\t\t3\n\t],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
+	assert.equal(stringifyObject(object, {inlineCharacterLimit: 12}), "{\n\tarr: [1, 2, 3],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
 });
