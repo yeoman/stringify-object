@@ -78,6 +78,43 @@ Type: `function`
 
 Expected to return a boolean of whether to keep the object.
 
+##### inlineCharacterLimit
+
+Type: `number`
+Default: undefined
+
+When set, will inline values up to `inlineCharacterLimit` length for the sake
+of more terse output.
+
+For example, given the example at the top of the README:
+
+```js
+var obj = {
+	foo: 'bar',
+	'arr': [1, 2, 3],
+	nested: { hello: "world" }
+};
+
+var pretty = stringifyObject(obj, {
+	indent: '  ',
+	singleQuotes: false,
+	inlineCharacterLimit: 12
+});
+
+console.log(pretty);
+/*
+{
+	foo: "bar",
+	arr: [1, 2, 3],
+	nested: {
+		hello: "world"
+	}
+}
+*/
+```
+
+As you can see, `arr` was printed as a one-liner because its string was shorter
+than 12 characters.
 
 ## License
 
