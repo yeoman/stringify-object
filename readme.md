@@ -1,5 +1,8 @@
 # stringify-object-with-one-liners [![Build Status](https://secure.travis-ci.org/searls/stringify-object-with-one-liners.svg?branch=master)](http://travis-ci.org/searls/stringify-object-with-one-liners)
 
+**Note: This is a fork of [stringify-object](https://github.com/yeoman/stringify-object) which adds the
+[inlineCharacterLimit](#inlinecharacterlimit) configuration option.**
+
 > Stringify an object/array like JSON.stringify just without all the double-quotes.
 
 Useful for when you want to get the string representation of an object in a formatted way.
