@@ -1,6 +1,6 @@
 'use strict';
 var isRegexp = require('is-regexp');
-var isPlainObj = require('is-plain-obj');
+var isObj = require('is-obj');
 
 module.exports = function (val, opts, pad) {
 	var seen = [];
@@ -76,7 +76,7 @@ module.exports = function (val, opts, pad) {
 			return expandWhiteSpace(ret);
 		}
 
-		if (isPlainObj(val)) {
+		if (isObj(val)) {
 			var objKeys = Object.keys(val);
 
 			if (objKeys.length === 0) {

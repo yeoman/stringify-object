@@ -130,3 +130,7 @@ it('does not mess up indents for complex objects', function(){
 	assert.equal(stringifyObject(object), "{\n\tarr: [\n\t\t1,\n\t\t2,\n\t\t3\n\t],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
 	assert.equal(stringifyObject(object, {inlineCharacterLimit: 12}), "{\n\tarr: [1, 2, 3],\n\tnested: {\n\t\thello: 'world'\n\t}\n}");
 });
+
+it('handles non-plain object', function () {
+	assert.notStrictEqual(stringifyObject(fs.statSync(__filename)), '[object Object]');
+});
