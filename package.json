@@ -10,10 +10,10 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "xo && mocha"
   },
   "files": [
     "index.js"
@@ -33,6 +33,10 @@
     "is-regexp": "^1.0.0"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true
   }
 }

@@ -1,20 +1,22 @@
 'use strict';
-var isRegexp = require('is-regexp');
-var isObj = require('is-obj');
+const isRegexp = require('is-regexp');
+const isObj = require('is-obj');
 
-module.exports = function (val, opts, pad) {
-	var seen = [];
+module.exports = (val, opts, pad) => {
+	const seen = [];
 
 	return (function stringify(val, opts, pad) {
 		opts = opts || {};
 		opts.indent = opts.indent || '\t';
 		pad = pad || '';
-		var tokens;
-		if(opts.inlineCharacterLimit == void 0) {
+
+		let tokens;
+
+		if (opts.inlineCharacterLimit === undefined) {
 			tokens = {
 				newLine: '\n',
 				newLineOrSpace: '\n',
-				pad: pad,
+				pad,
 				indent: pad + opts.indent
 			};
 		} else {
@@ -23,23 +25,27 @@ module.exports = function (val, opts, pad) {
 				newLineOrSpace: '@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@',
 				pad: '@@__STRINGIFY_OBJECT_PAD__@@',
 				indent: '@@__STRINGIFY_OBJECT_INDENT__@@'
-			}
+			};
 		}
-		var expandWhiteSpace = function(string) {
-			if (opts.inlineCharacterLimit == void 0) { return string; }
-			var oneLined = string.
-				replace(new RegExp(tokens.newLine, 'g'), '').
-				replace(new RegExp(tokens.newLineOrSpace, 'g'), ' ').
-				replace(new RegExp(tokens.pad + '|' + tokens.indent, 'g'), '');
 
-			if(oneLined.length <= opts.inlineCharacterLimit) {
-				return oneLined;
-			} else {
-				return string.
-					replace(new RegExp(tokens.newLine + '|' + tokens.newLineOrSpace, 'g'), '\n').
-					replace(new RegExp(tokens.pad, 'g'), pad).
-					replace(new RegExp(tokens.indent, 'g'), pad + opts.indent);
+		const expandWhiteSpace = string => {
+			if (opts.inlineCharacterLimit === undefined) {
+				return string;
 			}
+
+			const oneLined = string
+				.replace(new RegExp(tokens.newLine, 'g'), '')
+				.replace(new RegExp(tokens.newLineOrSpace, 'g'), ' ')
+				.replace(new RegExp(tokens.pad + '|' + tokens.indent, 'g'), '');
+
+			if (oneLined.length <= opts.inlineCharacterLimit) {
+				return oneLined;
+			}
+
+			return string
+				.replace(new RegExp(tokens.newLine + '|' + tokens.newLineOrSpace, 'g'), '\n')
+				.replace(new RegExp(tokens.pad, 'g'), pad)
+				.replace(new RegExp(tokens.indent, 'g'), pad + opts.indent);
 		};
 
 		if (seen.indexOf(val) !== -1) {
@@ -56,7 +62,7 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (val instanceof Date) {
-			return 'new Date(\'' + val.toISOString() + '\')';
+			return `new Date('${val.toISOString()}')`;
 		}
 
 		if (Array.isArray(val)) {
@@ -66,8 +72,8 @@ module.exports = function (val, opts, pad) {
 
 			seen.push(val);
 
-			var ret = '[' + tokens.newLine + val.map(function (el, i) {
-				var eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
+			const ret = '[' + tokens.newLine + val.map((el, i) => {
+				const eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
 				return tokens.indent + stringify(el, opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + ']';
 
@@ -77,7 +83,7 @@ module.exports = function (val, opts, pad) {
 		}
 
 		if (isObj(val)) {
-			var objKeys = Object.keys(val);
+			const objKeys = Object.keys(val);
 
 			if (objKeys.length === 0) {
 				return '{}';
@@ -85,13 +91,13 @@ module.exports = function (val, opts, pad) {
 
 			seen.push(val);
 
-			var ret = '{' + tokens.newLine + objKeys.map(function (el, i) {
+			const ret = '{' + tokens.newLine + objKeys.map((el, i) => {
 				if (opts.filter && !opts.filter(val, el)) {
 					return '';
 				}
 
-				var eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				var key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
+				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
+				const key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
 				return tokens.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + '}';
 
@@ -100,14 +106,14 @@ module.exports = function (val, opts, pad) {
 			return expandWhiteSpace(ret);
 		}
 
-		val = String(val).replace(/[\r\n]/g, function (x) {
-			return x === '\n' ? '\\n' : '\\r';
-		});
+		val = String(val).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
 
 		if (opts.singleQuotes === false) {
-			return '"' + val.replace(/"/g, '\\\"') + '"';
+			val = val.replace(/"/g, '\\"');
+			return `"${val}"`;
 		}
 
-		return '\'' + val.replace(/'/g, '\\\'') + '\'';
+		val = val.replace(/'/g, '\\\'');
+		return `'${val}'`;
 	})(val, opts, pad);
 };
