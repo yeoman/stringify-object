@@ -57,6 +57,7 @@ module.exports = (val, opts, pad) => {
 			typeof val === 'number' ||
 			typeof val === 'boolean' ||
 			typeof val === 'function' ||
+			typeof val === 'symbol' ||
 			isRegexp(val)) {
 			return String(val);
 		}
@@ -83,7 +84,7 @@ module.exports = (val, opts, pad) => {
 		}
 
 		if (isObj(val)) {
-			const objKeys = Object.keys(val);
+			const objKeys = Object.keys(val).concat(Object.getOwnPropertySymbols(val));
 
 			if (objKeys.length === 0) {
 				return '{}';
@@ -97,8 +98,8 @@ module.exports = (val, opts, pad) => {
 				}
 
 				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				const key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
-				return tokens.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
+				const key = typeof el === 'symbol' || /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
+				return tokens.indent + String(key) + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + '}';
 
 			seen.pop(val);

@@ -30,7 +30,10 @@ it('should stringify an object', () => {
 		regexp: /./,
 		NaN: NaN,
 		Infinity: Infinity,
-		newlines: "foo\nbar\r\nbaz"
+		newlines: "foo\nbar\r\nbaz",
+		[Symbol()]: Symbol(), // eslint-disable-line symbol-description
+		[Symbol('foo')]: Symbol('foo'),
+		[Symbol.for('foo')]: Symbol.for('foo')
 	};
 	/* eslint-enable */
 

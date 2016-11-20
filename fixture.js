@@ -23,5 +23,8 @@
   NaN: NaN,
   Infinity: Infinity,
   newlines: "foo\nbar\r\nbaz",
-  circular: "[Circular]"
+  circular: "[Circular]",
+  Symbol(): Symbol(),
+  Symbol(foo): Symbol(foo),
+  Symbol(foo): Symbol(foo)
 }
