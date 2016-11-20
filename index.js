@@ -98,7 +98,9 @@ module.exports = (val, opts, pad) => {
 				}
 
 				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				const key = typeof el === 'symbol' || /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
+				const isSymbol = typeof el === 'symbol';
+				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);
+				const key = isSymbol || isClassic ? el : stringify(el, opts);
 				return tokens.indent + String(key) + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + '}';
 
