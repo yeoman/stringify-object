@@ -30,7 +30,10 @@ it('should stringify an object', () => {
 		regexp: /./,
 		NaN: NaN,
 		Infinity: Infinity,
-		newlines: "foo\nbar\r\nbaz"
+		newlines: "foo\nbar\r\nbaz",
+		[Symbol()]: Symbol(), // eslint-disable-line symbol-description
+		[Symbol('foo')]: Symbol('foo'),
+		[Symbol.for('foo')]: Symbol.for('foo')
 	};
 	/* eslint-enable */
 
@@ -130,4 +133,14 @@ it('does not mess up indents for complex objects', () => {
 
 it('handles non-plain object', () => {
 	assert.notStrictEqual(stringifyObject(fs.statSync(__filename)), '[object Object]');
+});
+
+it('should not stringify non-enumerable symbols', () => {
+	const obj = {
+		[Symbol('for enumerable key')]: undefined
+	};
+	const symbol = Symbol('for non-enumerable key');
+	Object.defineProperty(obj, symbol, {enumerable: false});
+
+	assert.equal(stringifyObject(obj), '{\n\tSymbol(for enumerable key): undefined\n}');
 });

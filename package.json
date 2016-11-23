@@ -29,6 +29,7 @@
     "json"
   ],
   "dependencies": {
+    "get-own-enumerable-property-symbols": "^1.0.1",
     "is-obj": "^1.0.1",
     "is-regexp": "^1.0.0"
   },

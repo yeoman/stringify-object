@@ -1,6 +1,7 @@
 'use strict';
 const isRegexp = require('is-regexp');
 const isObj = require('is-obj');
+const getOwnEnumPropSymbols = require('get-own-enumerable-property-symbols');
 
 module.exports = (val, opts, pad) => {
 	const seen = [];
@@ -57,6 +58,7 @@ module.exports = (val, opts, pad) => {
 			typeof val === 'number' ||
 			typeof val === 'boolean' ||
 			typeof val === 'function' ||
+			typeof val === 'symbol' ||
 			isRegexp(val)) {
 			return String(val);
 		}
@@ -83,7 +85,7 @@ module.exports = (val, opts, pad) => {
 		}
 
 		if (isObj(val)) {
-			const objKeys = Object.keys(val);
+			const objKeys = Object.keys(val).concat(getOwnEnumPropSymbols(val));
 
 			if (objKeys.length === 0) {
 				return '{}';
@@ -97,8 +99,10 @@ module.exports = (val, opts, pad) => {
 				}
 
 				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				const key = /^[a-z$_][a-z$_0-9]*$/i.test(el) ? el : stringify(el, opts);
-				return tokens.indent + key + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
+				const isSymbol = typeof el === 'symbol';
+				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);
+				const key = isSymbol || isClassic ? el : stringify(el, opts);
+				return tokens.indent + String(key) + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
 			}).join('') + tokens.pad + '}';
 
 			seen.pop(val);
