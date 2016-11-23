@@ -134,3 +134,13 @@ it('does not mess up indents for complex objects', () => {
 it('handles non-plain object', () => {
 	assert.notStrictEqual(stringifyObject(fs.statSync(__filename)), '[object Object]');
 });
+
+it('should not stringify non-enumerable symbols', () => {
+	const obj = {
+		[Symbol('for enumerable key')]: undefined
+	};
+	const symbol = Symbol('for non-enumerable key');
+	Object.defineProperty(obj, symbol, {enumerable: false});
+
+	assert.equal(stringifyObject(obj), '{\n\tSymbol(for enumerable key): undefined\n}');
+});

@@ -1,6 +1,7 @@
 'use strict';
 const isRegexp = require('is-regexp');
 const isObj = require('is-obj');
+const getOwnEnumPropSymbols = require('get-own-enumerable-property-symbols');
 
 module.exports = (val, opts, pad) => {
 	const seen = [];
@@ -84,7 +85,7 @@ module.exports = (val, opts, pad) => {
 		}
 
 		if (isObj(val)) {
-			const objKeys = Object.keys(val).concat(Object.getOwnPropertySymbols(val));
+			const objKeys = Object.keys(val).concat(getOwnEnumPropSymbols(val));
 
 			if (objKeys.length === 0) {
 				return '{}';
