@@ -17,6 +17,8 @@ $ npm install --save stringify-object
 ## Usage
 
 ```js
+const stringifyObject = require('stringify-object');
+
 const obj = {
 	foo: 'bar',
 	'arr': [1, 2, 3],
