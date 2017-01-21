@@ -144,3 +144,10 @@ it('should not stringify non-enumerable symbols', () => {
 
 	assert.equal(stringifyObject(obj), '{\n\tSymbol(for enumerable key): undefined\n}');
 });
+
+it('handle linebreaks', () => {
+	assert.equal(stringifyObject('line1\nline2'), '\'line1\\nline2\'');
+	assert.equal(stringifyObject({twoLines: 'line1\nline2'}), '{\n\ttwoLines: \'line1\\nline2\'\n}');
+	assert.equal(stringifyObject('line1\nline2', {joinLines: false}), '\'line1\nline2\'');
+	assert.equal(stringifyObject({twoLines: 'line1\nline2'}, {joinLines: false}), '{\n\ttwoLines: \'line1\nline2\'\n}');
+});
