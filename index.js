@@ -117,7 +117,7 @@ module.exports = (val, opts, pad) => {
 			return `"${val}"`;
 		}
 
-		val = val.replace(/'/g, '\\\'');
+		val = val.replace(/(\\)?'/g, '\\\'');
 		return `'${val}'`;
 	})(val, opts, pad);
 };
