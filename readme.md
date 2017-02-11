@@ -1,5 +1,7 @@
 # stringify-object [![Build Status](https://secure.travis-ci.org/yeoman/stringify-object.svg?branch=master)](http://travis-ci.org/yeoman/stringify-object)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/yeoman/stringify-object.svg)](https://greenkeeper.io/)
+
 > Stringify an object/array like JSON.stringify just without all the double-quotes
 
 Useful for when you want to get the string representation of an object in a formatted way.
