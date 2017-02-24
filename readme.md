@@ -77,7 +77,7 @@ Set to false to get double-quoted strings.
 
 Type: `Function`
 
-Expected to return a `boolean` of whether to keep the object.
+Expected to return a `boolean` of whether to include the property `prop` of the object `obj` in the output.
 
 ##### inlineCharacterLimit
 
