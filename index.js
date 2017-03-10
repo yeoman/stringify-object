@@ -76,7 +76,11 @@ module.exports = (val, opts, pad) => {
 
 			const ret = '[' + tokens.newLine + val.map((el, i) => {
 				const eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				return tokens.indent + stringify(el, opts, pad + opts.indent) + eol;
+				let value = stringify(el, opts, pad + opts.indent);
+				if (opts.transform) {
+					value = opts.transform(val, i, value);
+				}
+				return tokens.indent + value + eol;
 			}).join('') + tokens.pad + ']';
 
 			seen.pop(val);
