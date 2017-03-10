@@ -79,6 +79,17 @@ Type: `Function`
 
 Expected to return a `boolean` of whether to include the property `prop` of the object `obj` in the output.
 
+##### transform(obj, prop, originalResult)
+
+Type: `Function`
+Default: `undefined`
+
+Expected to return a `String` that transforms the string that resulted from
+stringifying `obj[prop]`. This can be used to detect special types of objects
+that need to be stringified in a particular way. The `transform` function might
+return an alternate string in this case, otherwise returning the
+`originalResult`.
+
 ##### inlineCharacterLimit
 
 Type: `number`
