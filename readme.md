@@ -79,6 +79,41 @@ Type: `Function`
 
 Expected to return a `boolean` of whether to include the property `prop` of the object `obj` in the output.
 
+##### transform(obj, prop, originalResult)
+
+Type: `Function`<br>
+Default: `undefined`
+
+Expected to return a `string` that transforms the string that resulted from stringifying `obj[prop]`. This can be used to detect special types of objects that need to be stringified in a particular way. The `transform` function might return an alternate string in this case, otherwise returning the `originalResult`.
+
+Here's an example that uses the `transform` option to mask fields named "password":
+
+```js
+const obj = {
+	user: 'becky',
+	password: 'secret'
+}
+
+const pretty = stringifyObject(obj, {
+	transform: (obj, prop, originalResult) => {
+		if (prop === 'password') {
+			return originalResult.replace(/\w/g, '*');
+		} else {
+			return originalResult;
+		}
+	}
+});
+
+console.log(pretty);
+/*
+{
+	user: 'becky',
+	password: '******'
+}
+*/
+```
+
+
 ##### inlineCharacterLimit
 
 Type: `number`

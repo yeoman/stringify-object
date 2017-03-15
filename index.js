@@ -76,7 +76,11 @@ module.exports = (val, opts, pad) => {
 
 			const ret = '[' + tokens.newLine + val.map((el, i) => {
 				const eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				return tokens.indent + stringify(el, opts, pad + opts.indent) + eol;
+				let value = stringify(el, opts, pad + opts.indent);
+				if (opts.transform) {
+					value = opts.transform(val, i, value);
+				}
+				return tokens.indent + value + eol;
 			}).join('') + tokens.pad + ']';
 
 			seen.pop(val);
@@ -102,7 +106,11 @@ module.exports = (val, opts, pad) => {
 				const isSymbol = typeof el === 'symbol';
 				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);
 				const key = isSymbol || isClassic ? el : stringify(el, opts);
-				return tokens.indent + String(key) + ': ' + stringify(val[el], opts, pad + opts.indent) + eol;
+				let value = stringify(val[el], opts, pad + opts.indent);
+				if (opts.transform) {
+					value = opts.transform(val, el, value);
+				}
+				return tokens.indent + String(key) + ': ' + value + eol;
 			}).join('') + tokens.pad + '}';
 
 			seen.pop(val);
