@@ -95,9 +95,9 @@ const obj = {
 }
 
 const pretty = stringifyObject(obj, {
-	transform: function (obj, prop, originalResult) {
+	transform: (obj, prop, originalResult) => {
 		if (prop === 'password') {
-			return originalResult.replace(/\w/g,'*');
+			return originalResult.replace(/\w/g, '*');
 		} else {
 			return originalResult;
 		}
