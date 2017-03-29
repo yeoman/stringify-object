@@ -118,7 +118,9 @@ module.exports = (val, opts, pad) => {
 			return expandWhiteSpace(ret);
 		}
 
-		val = String(val).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
+		if (opts.joinLines !== false) {
+			val = String(val).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
+		}
 
 		if (opts.singleQuotes === false) {
 			val = val.replace(/"/g, '\\"');

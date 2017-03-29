@@ -149,6 +149,25 @@ console.log(pretty);
 
 As you can see, `arr` was printed as a one-liner because its string was shorter than 12 characters.
 
+##### joinLines
+
+Type: `boolean`<br>
+Default: `true`
+
+Set to false to not join lines having a linebreak character.
+
+```js
+console.log(stringifyObject('line1\nline2'));
+/*
+'line1\nline2'
+*/
+
+console.log(stringifyObject('line1\nline2', {joinLines: false}));
+/*
+'line1
+line2'
+*/
+```
 
 ## License
 
