@@ -1,9 +1,7 @@
-/* eslint-env mocha */
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const test = require('ava');
-const stringifyObject = require('../');
+import fs from 'fs';
+import path from 'path';
+import test from 'ava';
+import stringifyObject from '../';
 
 test('stringify an object', t => {
 	/* eslint-disable quotes, object-shorthand */
@@ -158,7 +156,7 @@ test('does not mess up indents for complex objects', t => {
 });
 
 test('handles non-plain object', t => {
-	t.notDeepEqual(stringifyObject(fs.statSync(__filename)), '[object Object]');
+	t.not(stringifyObject(fs.statSync(__filename)), '[object Object]');
 });
 
 test('don\'t stringify non-enumerable symbols', t => {
