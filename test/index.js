@@ -25,7 +25,7 @@ test('stringify an object', t => {
 		escapedString: "\"\"",
 		null: null,
 		undefined: undefined,
-		function: function () {},
+		fn: function () {},
 		regexp: /./,
 		NaN: NaN,
 		Infinity: Infinity,
