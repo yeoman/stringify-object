@@ -25,7 +25,7 @@ test('stringify an object', t => {
 		escapedString: "\"\"",
 		null: null,
 		undefined: undefined,
-		fn: function () {},
+		fn: function fn() {}, // eslint-disable-line func-names
 		regexp: /./,
 		NaN: NaN,
 		Infinity: Infinity,

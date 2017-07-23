@@ -18,7 +18,7 @@
   escapedString: "\"\"",
   null: null,
   undefined: undefined,
-  fn: function () {},
+  fn: function fn() {},
   regexp: /./,
   NaN: NaN,
   Infinity: Infinity,
