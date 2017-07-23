@@ -5,7 +5,7 @@ const path = require('path');
 const test = require('ava');
 const stringifyObject = require('../');
 
-test('should stringify an object', t => {
+test('stringify an object', t => {
 	/* eslint-disable quotes, object-shorthand */
 	const obj = {
 		foo: 'bar \'bar\'',
@@ -52,13 +52,13 @@ test('should stringify an object', t => {
 	);
 });
 
-test('should not detect reused object values as circular reference', t => {
+test('detect reused object values as circular reference', t => {
 	const val = {val: 10};
 	const obj = {foo: val, bar: val};
 	t.is(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
-test('should not detect reused array values as false circular references', t => {
+test('detect reused array values as false circular references', t => {
 	const val = [10];
 	const obj = {foo: val, bar: val};
 	t.is(stringifyObject(obj), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
@@ -98,7 +98,7 @@ test('allows an object to be transformed', t => {
 	t.is(actual, '{\n\tfoo: {\n\t\tval: 11\n\t},\n\tbar: \'9L\',\n\tbaz: [\n\t\tLOL\n\t]\n}');
 });
 
-test('should not crash with circular references in arrays', t => {
+test('doesn\'t  crash with circular references in arrays', t => {
 	const array = [];
 	array.push(array);
 	t.notThrows(() => {
@@ -112,7 +112,7 @@ test('should not crash with circular references in arrays', t => {
 	});
 });
 
-test('should handle circular references in arrays', t => {
+test('handle circular references in arrays', t => {
 	const array2 = [];
 	const array = [array2];
 	array2[0] = array2;
@@ -122,7 +122,7 @@ test('should handle circular references in arrays', t => {
 	});
 });
 
-test('should stringify complex circular arrays', t => {
+test('stringify complex circular arrays', t => {
 	const array = [[[]]];
 	array[0].push(array);
 	array[0][0].push(array);
@@ -161,7 +161,7 @@ test('handles non-plain object', t => {
 	t.notDeepEqual(stringifyObject(fs.statSync(__filename)), '[object Object]');
 });
 
-test('should not stringify non-enumerable symbols', t => {
+test('don\'t stringify non-enumerable symbols', t => {
 	const obj = {
 		[Symbol('for enumerable key')]: undefined
 	};
