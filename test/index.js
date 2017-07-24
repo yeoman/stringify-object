@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import test from 'ava';
-import stringifyObject from '../';
+import stringifyObject from '..';
 
 test('stringify an object', t => {
 	/* eslint-disable quotes, object-shorthand */

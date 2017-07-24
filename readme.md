@@ -10,7 +10,7 @@ It also handles circular references and lets you specify quote type.
 ## Install
 
 ```
-$ npm install --save stringify-object
+$ npm install stringify-object
 ```
 
 
@@ -62,7 +62,7 @@ Type: `Object` `Array`
 ##### indent
 
 Type: `string`<br>
-Default: `'\t'`
+Default: `\t`
 
 Preferred indentation.
 
