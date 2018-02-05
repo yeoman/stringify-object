@@ -89,7 +89,11 @@ module.exports = (val, opts, pad) => {
 		}
 
 		if (isObj(val)) {
-			const objKeys = Object.keys(val).concat(getOwnEnumPropSymbols(val));
+			let objKeys = Object.keys(val).concat(getOwnEnumPropSymbols(val));
+
+			if (opts.filter) {
+				objKeys = objKeys.filter(el => opts.filter(val, el));
+			}
 
 			if (objKeys.length === 0) {
 				return '{}';
@@ -98,10 +102,6 @@ module.exports = (val, opts, pad) => {
 			seen.push(val);
 
 			const ret = '{' + tokens.newLine + objKeys.map((el, i) => {
-				if (opts.filter && !opts.filter(val, el)) {
-					return '';
-				}
-
 				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
 				const isSymbol = typeof el === 'symbol';
 				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);

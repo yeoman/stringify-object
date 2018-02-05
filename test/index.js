@@ -69,6 +69,16 @@ test('considering filter option to stringify an object', t => {
 		filter: (obj, prop) => prop !== 'foo'
 	});
 	t.is(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
+
+	const actual2 = stringifyObject(obj, {
+		filter: (obj, prop) => prop !== 'bar'
+	});
+	t.is(actual2, '{\n\tfoo: {\n\t\tval: 10\n\t}\n}');
+
+	const actual3 = stringifyObject(obj, {
+		filter: (obj, prop) => prop !== 'val' && prop !== 'bar'
+	});
+	t.is(actual3, '{\n\tfoo: {}\n}');
 });
 
 test('allows an object to be transformed', t => {
