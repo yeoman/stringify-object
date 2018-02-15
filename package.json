@@ -16,7 +16,7 @@
 		"test": "xo && ava"
 	},
 	"files": [
-		"index.js"
+		"dist/index.js"
 	],
 	"keywords": [
 		"object",
@@ -35,6 +35,8 @@
 	},
 	"devDependencies": {
 		"ava": "*",
+		"babel-cli": "*",
+		"babel-preset-es2015": "^6.24.1",
 		"xo": "*"
 	}
 }
