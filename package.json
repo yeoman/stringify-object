@@ -13,10 +13,11 @@
 		"node": ">=4"
 	},
 	"scripts": {
-		"test": "xo && ava"
+		"transpile": "babel index.js --out-file dist/index.js",
+		"test": "npm run transpile && xo && ava"
 	},
 	"files": [
-		"index.js"
+		"dist/index.js"
 	],
 	"keywords": [
 		"object",
@@ -35,6 +36,8 @@
 	},
 	"devDependencies": {
 		"ava": "*",
+		"babel-cli": "*",
+		"babel-preset-es2015": "*",
 		"xo": "*"
 	}
 }
