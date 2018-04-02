@@ -152,4 +152,4 @@ As you can see, `arr` was printed as a one-liner because its string was shorter 
 
 ## License
 
-[BSD license](http://opensource.org/licenses/bsd-license.php) © Yeoman Team
+BSD-2-Clause © Yeoman team
