@@ -94,9 +94,11 @@ test('allows an object to be transformed', t => {
 		transform: (obj, prop, result) => {
 			if (prop === 'val') {
 				return String(obj[prop] + 1);
-			} else if (prop === 'bar') {
+			}
+			if (prop === 'bar') {
 				return '\'' + result + 'L\'';
-			} else if (obj[prop] === 8) {
+			}
+			if (obj[prop] === 8) {
 				return 'LOL';
 			}
 			return result;
