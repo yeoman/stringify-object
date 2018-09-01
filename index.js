@@ -83,7 +83,7 @@ module.exports = (val, opts, pad) => {
 				return tokens.indent + value + eol;
 			}).join('') + tokens.pad + ']';
 
-			seen.pop(val);
+			seen.pop();
 
 			return expandWhiteSpace(ret);
 		}
@@ -113,7 +113,7 @@ module.exports = (val, opts, pad) => {
 				return tokens.indent + String(key) + ': ' + value + eol;
 			}).join('') + tokens.pad + '}';
 
-			seen.pop(val);
+			seen.pop();
 
 			return expandWhiteSpace(ret);
 		}
