@@ -22,7 +22,9 @@ const stringifyObject = require('stringify-object');
 const obj = {
 	foo: 'bar',
 	'arr': [1, 2, 3],
-	nested: { hello: "world" }
+	nested: {
+		hello: "world"
+	}
 };
 
 const pretty = stringifyObject(obj, {
@@ -59,6 +61,8 @@ Type: `Object` `Array`
 
 #### options
 
+Type: `Object`
+
 ##### indent
 
 Type: `string`<br>
@@ -89,18 +93,20 @@ Expected to return a `string` that transforms the string that resulted from stri
 Here's an example that uses the `transform` option to mask fields named "password":
 
 ```js
+const stringifyObject = require('stringify-object');
+
 const obj = {
 	user: 'becky',
 	password: 'secret'
-}
+};
 
 const pretty = stringifyObject(obj, {
 	transform: (obj, prop, originalResult) => {
 		if (prop === 'password') {
 			return originalResult.replace(/\w/g, '*');
-		} else {
-			return originalResult;
 		}
+
+		return originalResult;
 	}
 });
 
@@ -123,10 +129,14 @@ When set, will inline values up to `inlineCharacterLimit` length for the sake of
 For example, given the example at the top of the README:
 
 ```js
+const stringifyObject = require('stringify-object');
+
 const obj = {
 	foo: 'bar',
 	'arr': [1, 2, 3],
-	nested: { hello: "world" }
+	nested: {
+		hello: "world"
+	}
 };
 
 const pretty = stringifyObject(obj, {

@@ -3,22 +3,20 @@ const isRegexp = require('is-regexp');
 const isObj = require('is-obj');
 const getOwnEnumPropSymbols = require('get-own-enumerable-property-symbols').default;
 
-module.exports = (val, opts, pad) => {
+module.exports = (input, options, pad) => {
 	const seen = [];
 
-	return (function stringify(val, opts, pad) {
-		opts = opts || {};
-		opts.indent = opts.indent || '\t';
-		pad = pad || '';
+	return (function stringify(input, options = {}, pad = '') {
+		options.indent = options.indent || '\t';
 
 		let tokens;
 
-		if (opts.inlineCharacterLimit === undefined) {
+		if (options.inlineCharacterLimit === undefined) {
 			tokens = {
 				newLine: '\n',
 				newLineOrSpace: '\n',
 				pad,
-				indent: pad + opts.indent
+				indent: pad + options.indent
 			};
 		} else {
 			tokens = {
@@ -30,7 +28,7 @@ module.exports = (val, opts, pad) => {
 		}
 
 		const expandWhiteSpace = string => {
-			if (opts.inlineCharacterLimit === undefined) {
+			if (options.inlineCharacterLimit === undefined) {
 				return string;
 			}
 
@@ -39,47 +37,50 @@ module.exports = (val, opts, pad) => {
 				.replace(new RegExp(tokens.newLineOrSpace, 'g'), ' ')
 				.replace(new RegExp(tokens.pad + '|' + tokens.indent, 'g'), '');
 
-			if (oneLined.length <= opts.inlineCharacterLimit) {
+			if (oneLined.length <= options.inlineCharacterLimit) {
 				return oneLined;
 			}
 
 			return string
 				.replace(new RegExp(tokens.newLine + '|' + tokens.newLineOrSpace, 'g'), '\n')
 				.replace(new RegExp(tokens.pad, 'g'), pad)
-				.replace(new RegExp(tokens.indent, 'g'), pad + opts.indent);
+				.replace(new RegExp(tokens.indent, 'g'), pad + options.indent);
 		};
 
-		if (seen.indexOf(val) !== -1) {
+		if (seen.indexOf(input) !== -1) {
 			return '"[Circular]"';
 		}
 
-		if (val === null ||
-			val === undefined ||
-			typeof val === 'number' ||
-			typeof val === 'boolean' ||
-			typeof val === 'function' ||
-			typeof val === 'symbol' ||
-			isRegexp(val)) {
-			return String(val);
+		if (input === null ||
+			input === undefined ||
+			typeof input === 'number' ||
+			typeof input === 'boolean' ||
+			typeof input === 'function' ||
+			typeof input === 'symbol' ||
+			isRegexp(input)
+		) {
+			return String(input);
 		}
 
-		if (val instanceof Date) {
-			return `new Date('${val.toISOString()}')`;
+		if (input instanceof Date) {
+			return `new Date('${input.toISOString()}')`;
 		}
 
-		if (Array.isArray(val)) {
-			if (val.length === 0) {
+		if (Array.isArray(input)) {
+			if (input.length === 0) {
 				return '[]';
 			}
 
-			seen.push(val);
+			seen.push(input);
 
-			const ret = '[' + tokens.newLine + val.map((el, i) => {
-				const eol = val.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				let value = stringify(el, opts, pad + opts.indent);
-				if (opts.transform) {
-					value = opts.transform(val, i, value);
+			const ret = '[' + tokens.newLine + input.map((el, i) => {
+				const eol = input.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
+
+				let value = stringify(el, options, pad + options.indent);
+				if (options.transform) {
+					value = options.transform(input, i, value);
 				}
+
 				return tokens.indent + value + eol;
 			}).join('') + tokens.pad + ']';
 
@@ -88,28 +89,30 @@ module.exports = (val, opts, pad) => {
 			return expandWhiteSpace(ret);
 		}
 
-		if (isObj(val)) {
-			let objKeys = Object.keys(val).concat(getOwnEnumPropSymbols(val));
+		if (isObj(input)) {
+			let objKeys = Object.keys(input).concat(getOwnEnumPropSymbols(input));
 
-			if (opts.filter) {
-				objKeys = objKeys.filter(el => opts.filter(val, el));
+			if (options.filter) {
+				objKeys = objKeys.filter(el => options.filter(input, el));
 			}
 
 			if (objKeys.length === 0) {
 				return '{}';
 			}
 
-			seen.push(val);
+			seen.push(input);
 
 			const ret = '{' + tokens.newLine + objKeys.map((el, i) => {
 				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
 				const isSymbol = typeof el === 'symbol';
 				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);
-				const key = isSymbol || isClassic ? el : stringify(el, opts);
-				let value = stringify(val[el], opts, pad + opts.indent);
-				if (opts.transform) {
-					value = opts.transform(val, el, value);
+				const key = isSymbol || isClassic ? el : stringify(el, options);
+
+				let value = stringify(input[el], options, pad + options.indent);
+				if (options.transform) {
+					value = options.transform(input, el, value);
 				}
+
 				return tokens.indent + String(key) + ': ' + value + eol;
 			}).join('') + tokens.pad + '}';
 
@@ -118,14 +121,14 @@ module.exports = (val, opts, pad) => {
 			return expandWhiteSpace(ret);
 		}
 
-		val = String(val).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
+		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
 
-		if (opts.singleQuotes === false) {
-			val = val.replace(/"/g, '\\"');
-			return `"${val}"`;
+		if (options.singleQuotes === false) {
+			input = input.replace(/"/g, '\\"');
+			return `"${input}"`;
 		}
 
-		val = val.replace(/\\?'/g, '\\\'');
-		return `'${val}'`;
-	})(val, opts, pad);
+		input = input.replace(/\\?'/g, '\\\'');
+		return `'${input}'`;
+	})(input, options, pad);
 };
