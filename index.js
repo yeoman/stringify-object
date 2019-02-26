@@ -51,11 +51,18 @@ module.exports = (input, options, pad) => {
 			return '"[Circular]"';
 		}
 
+		if (typeof input === 'function') {
+			let output = String(input);
+			if (!/^(function\b|\()/.test(output)) {
+				output = output.replace(/^[^(]+/, 'function');
+			}
+			return output;
+		}
+
 		if (input === null ||
 			input === undefined ||
 			typeof input === 'number' ||
 			typeof input === 'boolean' ||
-			typeof input === 'function' ||
 			typeof input === 'symbol' ||
 			isRegexp(input)
 		) {

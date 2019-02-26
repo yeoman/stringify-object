@@ -26,6 +26,9 @@ test('stringify an object', t => {
 		null: null,
 		undefined: undefined,
 		fn: function fn() {}, // eslint-disable-line func-names
+		fn2: function () {},
+		fn3: () => {},
+		'#@'() {},
 		regexp: /./,
 		NaN: NaN,
 		Infinity: Infinity,
