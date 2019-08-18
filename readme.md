@@ -55,6 +55,8 @@ console.log(pretty);
 
 Circular references will be replaced with `"[Circular]"`.
 
+Object keys are only quoted when necessary, for example, `{'foo-bar': true}`.
+
 #### input
 
 Type: `Object` `Array`
