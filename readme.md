@@ -19,7 +19,7 @@ $ npm install stringify-object
 ```js
 const stringifyObject = require('stringify-object');
 
-const obj = {
+const object = {
 	foo: 'bar',
 	'arr': [1, 2, 3],
 	nested: {
@@ -27,7 +27,7 @@ const obj = {
 	}
 };
 
-const pretty = stringifyObject(obj, {
+const pretty = stringifyObject(object, {
 	indent: '  ',
 	singleQuotes: false
 });
@@ -51,7 +51,7 @@ console.log(pretty);
 
 ## API
 
-### stringifyObject(input, [options])
+### stringifyObject(input, options?)
 
 Circular references will be replaced with `"[Circular]"`.
 
@@ -59,11 +59,11 @@ Object keys are only quoted when necessary, for example, `{'foo-bar': true}`.
 
 #### input
 
-Type: `Object` `Array`
+Type: `object | Array`
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 ##### indent
 
@@ -79,32 +79,32 @@ Default: `true`
 
 Set to false to get double-quoted strings.
 
-##### filter(obj, prop)
+##### filter(object, property)
 
 Type: `Function`
 
-Expected to return a `boolean` of whether to include the property `prop` of the object `obj` in the output.
+Expected to return a `boolean` of whether to include the property `property` of the object `object` in the output.
 
-##### transform(obj, prop, originalResult)
+##### transform(object, property, originalResult)
 
 Type: `Function`<br>
 Default: `undefined`
 
-Expected to return a `string` that transforms the string that resulted from stringifying `obj[prop]`. This can be used to detect special types of objects that need to be stringified in a particular way. The `transform` function might return an alternate string in this case, otherwise returning the `originalResult`.
+Expected to return a `string` that transforms the string that resulted from stringifying `object[property]`. This can be used to detect special types of objects that need to be stringified in a particular way. The `transform` function might return an alternate string in this case, otherwise returning the `originalResult`.
 
 Here's an example that uses the `transform` option to mask fields named "password":
 
 ```js
 const stringifyObject = require('stringify-object');
 
-const obj = {
+const object = {
 	user: 'becky',
 	password: 'secret'
 };
 
-const pretty = stringifyObject(obj, {
-	transform: (obj, prop, originalResult) => {
-		if (prop === 'password') {
+const pretty = stringifyObject(object, {
+	transform: (object, property, originalResult) => {
+		if (property === 'password') {
 			return originalResult.replace(/\w/g, '*');
 		}
 
@@ -133,7 +133,7 @@ For example, given the example at the top of the README:
 ```js
 const stringifyObject = require('stringify-object');
 
-const obj = {
+const object = {
 	foo: 'bar',
 	'arr': [1, 2, 3],
 	nested: {
@@ -141,7 +141,7 @@ const obj = {
 	}
 };
 
-const pretty = stringifyObject(obj, {
+const pretty = stringifyObject(object, {
 	indent: '  ',
 	singleQuotes: false,
 	inlineCharacterLimit: 12
@@ -162,6 +162,14 @@ console.log(pretty);
 As you can see, `arr` was printed as a one-liner because its string was shorter than 12 characters.
 
 
-## License
+---
 
-BSD-2-Clause © Yeoman team
+<div align="center">
+	<b>
+		<a href="https://tidelift.com/subscription/pkg/npm-stringify-object?utm_source=npm-stringify-object&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
+	</b>
+	<br>
+	<sub>
+		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
+	</sub>
+</div>
