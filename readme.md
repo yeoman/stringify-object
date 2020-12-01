@@ -1,4 +1,4 @@
-# stringify-object [![Build Status](https://secure.travis-ci.org/yeoman/stringify-object.svg?branch=master)](http://travis-ci.org/yeoman/stringify-object)
+# stringify-object
 
 > Stringify an object/array like JSON.stringify just without all the double-quotes
 
@@ -6,13 +6,11 @@ Useful for when you want to get the string representation of an object in a form
 
 It also handles circular references and lets you specify quote type.
 
-
 ## Install
 
 ```
 $ npm install stringify-object
 ```
-
 
 ## Usage
 
@@ -48,7 +46,6 @@ console.log(pretty);
 */
 ```
 
-
 ## API
 
 ### stringifyObject(input, options?)
@@ -67,14 +64,14 @@ Type: `object`
 
 ##### indent
 
-Type: `string`<br>
+Type: `string`\
 Default: `\t`
 
 Preferred indentation.
 
 ##### singleQuotes
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Set to false to get double-quoted strings.
@@ -87,7 +84,7 @@ Expected to return a `boolean` of whether to include the property `property` of 
 
 ##### transform(object, property, originalResult)
 
-Type: `Function`<br>
+Type: `Function`\
 Default: `undefined`
 
 Expected to return a `string` that transforms the string that resulted from stringifying `object[property]`. This can be used to detect special types of objects that need to be stringified in a particular way. The `transform` function might return an alternate string in this case, otherwise returning the `originalResult`.
@@ -120,7 +117,6 @@ console.log(pretty);
 }
 */
 ```
-
 
 ##### inlineCharacterLimit
 
@@ -160,7 +156,6 @@ console.log(pretty);
 ```
 
 As you can see, `arr` was printed as a one-liner because its string was shorter than 12 characters.
-
 
 ---
 
