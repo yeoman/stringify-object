@@ -9,8 +9,10 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
+	"type": "module",
+	"exports": "./index.js",
 	"engines": {
-		"node": ">=6"
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -29,13 +31,13 @@
 		"json"
 	],
 	"dependencies": {
-		"get-own-enumerable-property-symbols": "^3.0.0",
-		"is-obj": "^1.0.1",
-		"is-regexp": "^2.0.0"
+		"get-own-enumerable-property-symbols": "^3.0.2",
+		"is-obj": "^3.0.0",
+		"is-regexp": "^3.0.0"
 	},
 	"devDependencies": {
-		"ava": "^0.25.0",
-		"xo": "^0.23.0"
+		"ava": "^3.15.0",
+		"xo": "^0.44.0"
 	},
 	"xo": {
 		"ignores": [

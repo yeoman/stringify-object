@@ -1,29 +1,27 @@
-'use strict';
-const isRegexp = require('is-regexp');
-const isObj = require('is-obj');
-const getOwnEnumPropSymbols = require('get-own-enumerable-property-symbols').default;
+import isRegexp from 'is-regexp';
+import isObject from 'is-obj';
+import getOwnEnumPropSymbols from 'get-own-enumerable-property-symbols';
 
-module.exports = (input, options, pad) => {
+export default function stringifyObject(input, options, pad) {
 	const seen = [];
 
 	return (function stringify(input, options = {}, pad = '') {
-		options.indent = options.indent || '\t';
+		const indent = options.indent || '\t';
 
 		let tokens;
-
 		if (options.inlineCharacterLimit === undefined) {
 			tokens = {
-				newLine: '\n',
-				newLineOrSpace: '\n',
+				newline: '\n',
+				newlineOrSpace: '\n',
 				pad,
-				indent: pad + options.indent
+				indent: pad + indent,
 			};
 		} else {
 			tokens = {
-				newLine: '@@__STRINGIFY_OBJECT_NEW_LINE__@@',
-				newLineOrSpace: '@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@',
+				newline: '@@__STRINGIFY_OBJECT_NEW_LINE__@@',
+				newlineOrSpace: '@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@',
 				pad: '@@__STRINGIFY_OBJECT_PAD__@@',
-				indent: '@@__STRINGIFY_OBJECT_INDENT__@@'
+				indent: '@@__STRINGIFY_OBJECT_INDENT__@@',
 			};
 		}
 
@@ -33,8 +31,8 @@ module.exports = (input, options, pad) => {
 			}
 
 			const oneLined = string
-				.replace(new RegExp(tokens.newLine, 'g'), '')
-				.replace(new RegExp(tokens.newLineOrSpace, 'g'), ' ')
+				.replace(new RegExp(tokens.newline, 'g'), '')
+				.replace(new RegExp(tokens.newlineOrSpace, 'g'), ' ')
 				.replace(new RegExp(tokens.pad + '|' + tokens.indent, 'g'), '');
 
 			if (oneLined.length <= options.inlineCharacterLimit) {
@@ -42,22 +40,23 @@ module.exports = (input, options, pad) => {
 			}
 
 			return string
-				.replace(new RegExp(tokens.newLine + '|' + tokens.newLineOrSpace, 'g'), '\n')
+				.replace(new RegExp(tokens.newline + '|' + tokens.newlineOrSpace, 'g'), '\n')
 				.replace(new RegExp(tokens.pad, 'g'), pad)
-				.replace(new RegExp(tokens.indent, 'g'), pad + options.indent);
+				.replace(new RegExp(tokens.indent, 'g'), pad + indent);
 		};
 
-		if (seen.indexOf(input) !== -1) {
+		if (seen.includes(input)) {
 			return '"[Circular]"';
 		}
 
-		if (input === null ||
-			input === undefined ||
-			typeof input === 'number' ||
-			typeof input === 'boolean' ||
-			typeof input === 'function' ||
-			typeof input === 'symbol' ||
-			isRegexp(input)
+		if (
+			input === null
+			|| input === undefined
+			|| typeof input === 'number'
+			|| typeof input === 'boolean'
+			|| typeof input === 'function'
+			|| typeof input === 'symbol'
+			|| isRegexp(input)
 		) {
 			return String(input);
 		}
@@ -73,10 +72,10 @@ module.exports = (input, options, pad) => {
 
 			seen.push(input);
 
-			const ret = '[' + tokens.newLine + input.map((el, i) => {
-				const eol = input.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
+			const returnValue = '[' + tokens.newline + input.map((element, i) => {
+				const eol = input.length - 1 === i ? tokens.newline : ',' + tokens.newlineOrSpace;
 
-				let value = stringify(el, options, pad + options.indent);
+				let value = stringify(element, options, pad + indent);
 				if (options.transform) {
 					value = options.transform(input, i, value);
 				}
@@ -86,31 +85,35 @@ module.exports = (input, options, pad) => {
 
 			seen.pop();
 
-			return expandWhiteSpace(ret);
+			return expandWhiteSpace(returnValue);
 		}
 
-		if (isObj(input)) {
-			let objKeys = Object.keys(input).concat(getOwnEnumPropSymbols(input));
+		if (isObject(input)) {
+			let objectKeys = [
+				...Object.keys(input),
+				...getOwnEnumPropSymbols.default(input),
+			];
 
 			if (options.filter) {
-				objKeys = objKeys.filter(el => options.filter(input, el));
+				// eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
+				objectKeys = objectKeys.filter(element => options.filter(input, element));
 			}
 
-			if (objKeys.length === 0) {
+			if (objectKeys.length === 0) {
 				return '{}';
 			}
 
 			seen.push(input);
 
-			const ret = '{' + tokens.newLine + objKeys.map((el, i) => {
-				const eol = objKeys.length - 1 === i ? tokens.newLine : ',' + tokens.newLineOrSpace;
-				const isSymbol = typeof el === 'symbol';
-				const isClassic = !isSymbol && /^[a-z$_][a-z$_0-9]*$/i.test(el);
-				const key = isSymbol || isClassic ? el : stringify(el, options);
+			const returnValue = '{' + tokens.newline + objectKeys.map((element, i) => {
+				const eol = objectKeys.length - 1 === i ? tokens.newline : ',' + tokens.newlineOrSpace;
+				const isSymbol = typeof element === 'symbol';
+				const isClassic = !isSymbol && /^[a-z$_][$\w]*$/i.test(element);
+				const key = isSymbol || isClassic ? element : stringify(element, options);
 
-				let value = stringify(input[el], options, pad + options.indent);
+				let value = stringify(input[element], options, pad + indent);
 				if (options.transform) {
-					value = options.transform(input, el, value);
+					value = options.transform(input, element, value);
 				}
 
 				return tokens.indent + String(key) + ': ' + value + eol;
@@ -118,7 +121,7 @@ module.exports = (input, options, pad) => {
 
 			seen.pop();
 
-			return expandWhiteSpace(ret);
+			return expandWhiteSpace(returnValue);
 		}
 
 		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
@@ -131,4 +134,4 @@ module.exports = (input, options, pad) => {
 		input = input.replace(/\\?'/g, '\\\'');
 		return `'${input}'`;
 	})(input, options, pad);
-};
+}

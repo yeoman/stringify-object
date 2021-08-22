@@ -1,18 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import test from 'ava';
-import stringifyObject from '..';
+import stringifyObject from '../index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('stringify an object', t => {
 	/* eslint-disable quotes, object-shorthand */
-	const obj = {
+	const object = {
 		foo: 'bar \'bar\'',
 		foo2: [
 			'foo',
 			'bar',
 			{
-				foo: "bar 'bar'"
-			}
+				foo: "bar 'bar'",
+			},
 		],
 		'foo-foo': 'bar',
 		'2foo': 'bar',
@@ -27,82 +30,85 @@ test('stringify an object', t => {
 		undefined: undefined,
 		fn: function fn() {}, // eslint-disable-line func-names
 		regexp: /./,
-		NaN: NaN,
-		Infinity: Infinity,
+		NaN: Number.NaN,
+		Infinity: Number.POSITIVE_INFINITY,
 		newlines: "foo\nbar\r\nbaz",
 		[Symbol()]: Symbol(), // eslint-disable-line symbol-description
 		[Symbol('foo')]: Symbol('foo'),
-		[Symbol.for('foo')]: Symbol.for('foo')
+		[Symbol.for('foo')]: Symbol.for('foo'),
 	};
 	/* eslint-enable */
 
-	obj.circular = obj;
+	object.circular = object;
 
-	const actual = stringifyObject(obj, {
+	const actual = stringifyObject(object, {
 		indent: '  ',
-		singleQuotes: false
+		singleQuotes: false,
 	});
 
 	t.is(actual + '\n', fs.readFileSync(path.resolve(__dirname, 'fixtures/object.js'), 'utf8'));
 	t.is(
 		stringifyObject({foo: 'a \' b \' c \\\' d'}, {singleQuotes: true}),
-		'{\n\tfoo: \'a \\\' b \\\' c \\\' d\'\n}'
+		'{\n\tfoo: \'a \\\' b \\\' c \\\' d\'\n}',
 	);
 });
 
 test('detect reused object values as circular reference', t => {
-	const val = {val: 10};
-	const obj = {foo: val, bar: val};
-	t.is(stringifyObject(obj), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
+	const value = {val: 10};
+	const object = {foo: value, bar: value};
+	t.is(stringifyObject(object), '{\n\tfoo: {\n\t\tval: 10\n\t},\n\tbar: {\n\t\tval: 10\n\t}\n}');
 });
 
 test('detect reused array values as false circular references', t => {
-	const val = [10];
-	const obj = {foo: val, bar: val};
-	t.is(stringifyObject(obj), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
+	const value = [10];
+	const object = {foo: value, bar: value};
+	t.is(stringifyObject(object), '{\n\tfoo: [\n\t\t10\n\t],\n\tbar: [\n\t\t10\n\t]\n}');
 });
 
 test('considering filter option to stringify an object', t => {
-	const val = {val: 10};
-	const obj = {foo: val, bar: val};
-	const actual = stringifyObject(obj, {
-		filter: (obj, prop) => prop !== 'foo'
+	const value = {val: 10};
+	const object = {foo: value, bar: value};
+	const actual = stringifyObject(object, {
+		filter: (object, prop) => prop !== 'foo',
 	});
 	t.is(actual, '{\n\tbar: {\n\t\tval: 10\n\t}\n}');
 
-	const actual2 = stringifyObject(obj, {
-		filter: (obj, prop) => prop !== 'bar'
+	const actual2 = stringifyObject(object, {
+		filter: (object, prop) => prop !== 'bar',
 	});
 	t.is(actual2, '{\n\tfoo: {\n\t\tval: 10\n\t}\n}');
 
-	const actual3 = stringifyObject(obj, {
-		filter: (obj, prop) => prop !== 'val' && prop !== 'bar'
+	const actual3 = stringifyObject(object, {
+		filter: (object, prop) => prop !== 'val' && prop !== 'bar',
 	});
 	t.is(actual3, '{\n\tfoo: {}\n}');
 });
 
 test('allows an object to be transformed', t => {
-	const obj = {
+	const object = {
 		foo: {
-			val: 10
+			val: 10,
 		},
 		bar: 9,
-		baz: [8]
+		baz: [8],
 	};
 
-	const actual = stringifyObject(obj, {
-		transform: (obj, prop, result) => {
+	const actual = stringifyObject(object, {
+		transform: (object, prop, result) => {
 			if (prop === 'val') {
-				return String(obj[prop] + 1);
+				return String(object[prop] + 1);
 			}
+
 			if (prop === 'bar') {
 				return '\'' + result + 'L\'';
 			}
-			if (obj[prop] === 8) {
+
+			if (object[prop] === 8) {
 				return 'LOL';
 			}
+
 			return result;
-		}
+		},
 	});
 
 	t.is(actual, '{\n\tfoo: {\n\t\tval: 11\n\t},\n\tbar: \'9L\',\n\tbaz: [\n\t\tLOL\n\t]\n}');
@@ -135,8 +141,7 @@ test('handle circular references in arrays', t => {
 test('stringify complex circular arrays', t => {
 	const array = [[[]]];
 	array[0].push(array);
-	array[0][0].push(array);
-	array[0][0].push(10);
+	array[0][0].push(array, 10);
 	array[0][0][0] = array;
 	t.is(stringifyObject(array), '[\n\t[\n\t\t[\n\t\t\t"[Circular]",\n\t\t\t10\n\t\t],\n\t\t"[Circular]"\n\t]\n]');
 });
@@ -160,7 +165,7 @@ test('allows short arrays to be one-lined', t => {
 test('does not mess up indents for complex objects', t => {
 	const object = {
 		arr: [1, 2, 3],
-		nested: {hello: 'world'}
+		nested: {hello: 'world'},
 	};
 
 	t.is(stringifyObject(object), '{\n\tarr: [\n\t\t1,\n\t\t2,\n\t\t3\n\t],\n\tnested: {\n\t\thello: \'world\'\n\t}\n}');
@@ -168,15 +173,16 @@ test('does not mess up indents for complex objects', t => {
 });
 
 test('handles non-plain object', t => {
-	t.not(stringifyObject(fs.statSync(__filename)), '[object Object]');
+	// TODO: It should work without `fileURLToPath` but currently it throws for an unknown reason.
+	t.not(stringifyObject(fs.statSync(fileURLToPath(import.meta.url))), '[object Object]');
 });
 
 test('don\'t stringify non-enumerable symbols', t => {
-	const obj = {
-		[Symbol('for enumerable key')]: undefined
+	const object = {
+		[Symbol('for enumerable key')]: undefined,
 	};
 	const symbol = Symbol('for non-enumerable key');
-	Object.defineProperty(obj, symbol, {enumerable: false});
+	Object.defineProperty(object, symbol, {enumerable: false});
 
-	t.is(stringifyObject(obj), '{\n\tSymbol(for enumerable key): undefined\n}');
+	t.is(stringifyObject(object), '{\n\tSymbol(for enumerable key): undefined\n}');
 });

@@ -15,7 +15,7 @@ $ npm install stringify-object
 ## Usage
 
 ```js
-const stringifyObject = require('stringify-object');
+import stringifyObject from 'stringify-object';
 
 const object = {
 	foo: 'bar',
@@ -92,7 +92,7 @@ Expected to return a `string` that transforms the string that resulted from stri
 Here's an example that uses the `transform` option to mask fields named "password":
 
 ```js
-const stringifyObject = require('stringify-object');
+import stringifyObject from 'stringify-object';
 
 const object = {
 	user: 'becky',
@@ -127,7 +127,7 @@ When set, will inline values up to `inlineCharacterLimit` length for the sake of
 For example, given the example at the top of the README:
 
 ```js
-const stringifyObject = require('stringify-object');
+import stringifyObject from 'stringify-object';
 
 const object = {
 	foo: 'bar',
