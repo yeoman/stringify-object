@@ -125,13 +125,14 @@ export default function stringifyObject(input, options, pad) {
 		}
 
 		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
+		input = input.replace(/\\/g, '\\\\');
 
 		if (options.singleQuotes === false) {
 			input = input.replace(/"/g, '\\"');
 			return `"${input}"`;
 		}
 
-		input = input.replace(/\\?'/g, '\\\'');
+		input = input.replace(/'/g, '\\\'');
 		return `'${input}'`;
 	})(input, options, pad);
 }
