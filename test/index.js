@@ -49,8 +49,23 @@ test('stringify an object', t => {
 	t.is(actual + '\n', fs.readFileSync(path.resolve(__dirname, 'fixtures/object.js'), 'utf8'));
 	t.is(
 		stringifyObject({foo: 'a \' b \' c \\\' d'}, {singleQuotes: true}),
-		'{\n\tfoo: \'a \\\' b \\\' c \\\' d\'\n}',
+		'{\n\tfoo: \'a \\\' b \\\' c \\\\\\\' d\'\n}',
 	);
+});
+
+test('string escaping works properly', t => {
+	t.is(stringifyObject('\\', {singleQuotes: true}), '\'\\\\\''); // \
+	t.is(stringifyObject('\\\'', {singleQuotes: true}), '\'\\\\\\\'\''); // \'
+	t.is(stringifyObject('\\"', {singleQuotes: true}), '\'\\\\"\''); // \"
+	t.is(stringifyObject('\\', {singleQuotes: false}), '"\\\\"'); // \
+	t.is(stringifyObject('\\\'', {singleQuotes: false}), '"\\\\\'"'); // \'
+	t.is(stringifyObject('\\"', {singleQuotes: false}), '"\\\\\\""'); // \"
+	/* eslint-disable no-eval */
+	t.is(eval(stringifyObject('\\\'')), '\\\'');
+	t.is(eval(stringifyObject('\\\'', {singleQuotes: false})), '\\\'');
+	/* eslint-enable */
+	// Regression test for #40
+	t.is(stringifyObject("a'a"), '\'a\\\'a\''); // eslint-disable-line quotes
 });
 
 test('detect reused object values as circular reference', t => {
