@@ -124,8 +124,8 @@ export default function stringifyObject(input, options, pad) {
 			return expandWhiteSpace(returnValue);
 		}
 
-		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
 		input = input.replace(/\\/g, '\\\\');
+		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
 
 		if (options.singleQuotes === false) {
 			input = input.replace(/"/g, '\\"');
