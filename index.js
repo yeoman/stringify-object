@@ -124,6 +124,7 @@ export default function stringifyObject(input, options, pad) {
 			return expandWhiteSpace(returnValue);
 		}
 
+		input = input.replace(/\\/g, '\\\\');
 		input = String(input).replace(/[\r\n]/g, x => x === '\n' ? '\\n' : '\\r');
 
 		if (options.singleQuotes === false) {
@@ -131,7 +132,7 @@ export default function stringifyObject(input, options, pad) {
 			return `"${input}"`;
 		}
 
-		input = input.replace(/\\?'/g, '\\\'');
+		input = input.replace(/'/g, '\\\'');
 		return `'${input}'`;
 	})(input, options, pad);
 }
