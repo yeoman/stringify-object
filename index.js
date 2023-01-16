@@ -1,6 +1,6 @@
 import isRegexp from 'is-regexp';
 import isObject from 'is-obj';
-import getOwnEnumPropSymbols from 'get-own-enumerable-property-symbols';
+import getOwnEnumerableKeys from 'get-own-enumerable-keys';
 
 export default function stringifyObject(input, options, pad) {
 	const seen = [];
@@ -89,10 +89,7 @@ export default function stringifyObject(input, options, pad) {
 		}
 
 		if (isObject(input)) {
-			let objectKeys = [
-				...Object.keys(input),
-				...getOwnEnumPropSymbols.default(input),
-			];
+			let objectKeys = getOwnEnumerableKeys(input);
 
 			if (options.filter) {
 				// eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
@@ -105,8 +102,8 @@ export default function stringifyObject(input, options, pad) {
 
 			seen.push(input);
 
-			const returnValue = '{' + tokens.newline + objectKeys.map((element, i) => {
-				const eol = objectKeys.length - 1 === i ? tokens.newline : ',' + tokens.newlineOrSpace;
+			const returnValue = '{' + tokens.newline + objectKeys.map((element, index) => {
+				const eol = objectKeys.length - 1 === index ? tokens.newline : ',' + tokens.newlineOrSpace;
 				const isSymbol = typeof element === 'symbol';
 				const isClassic = !isSymbol && /^[a-z$_][$\w]*$/i.test(element);
 				const key = isSymbol || isClassic ? element : stringify(element, options);

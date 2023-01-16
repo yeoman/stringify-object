@@ -8,8 +8,8 @@ It also handles circular references and lets you specify quote type.
 
 ## Install
 
-```
-$ npm install stringify-object
+```sh
+npm install stringify-object
 ```
 
 ## Usage
@@ -156,15 +156,3 @@ console.log(pretty);
 ```
 
 As you can see, `arr` was printed as a one-liner because its string was shorter than 12 characters.
-
----
-
-<div align="center">
-	<b>
-		<a href="https://tidelift.com/subscription/pkg/npm-stringify-object?utm_source=npm-stringify-object&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
-	</b>
-	<br>
-	<sub>
-		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
-	</sub>
-</div>

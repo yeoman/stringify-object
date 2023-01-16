@@ -109,7 +109,7 @@ test('allows an object to be transformed', t => {
 	};
 
 	const actual = stringifyObject(object, {
-		transform: (object, prop, result) => {
+		transform(object, prop, result) {
 			if (prop === 'val') {
 				return String(object[prop] + 1);
 			}
